@@ -7,3 +7,5 @@ out/
 # Log file
 *.log
 
+#Intellij config files
+*.iml
