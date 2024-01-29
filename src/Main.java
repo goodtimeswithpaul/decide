@@ -1,7 +1,10 @@
 import java.awt.geom.Point2D;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
-    final int VECTOR_SIZE = 15;
+    final static int VECTOR_SIZE = 15;
 
     public enum LogicalConnectors {
         ANDD,
@@ -10,17 +13,71 @@ public class Main {
     }
 
     // --- Inputs ---
-    int numPoints;
-    Point2D[] points;
-    Parameters parameters;
-    LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
-    boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
+    public static int numPoints;
+    public static Point2D[] points;
+    public static Parameters parameters;
+    public static LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
+    public static boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
 
     // --- Outputs ---
     boolean launch;
     boolean[] conditionsMetVector = new boolean[VECTOR_SIZE];
     boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
+
+    public static void getInput(String filename){
+        BufferedReader br = null;
+
+        try{
+            br = new BufferedReader(new FileReader(filename));
+
+            numPoints = Integer.parseInt(br.readLine()); //Line 1
+
+            if(numPoints < 3){
+                br.close();
+                throw new IllegalArgumentException("AT LEAST 3 POINTS!!!");
+            }
+
+            points = new Point2D[numPoints];
+            
+            //Putting the points into array
+            for (int i = 0; i < numPoints; i++) {
+                String[] coordinates = br.readLine().split(" ");
+                points[i] = new Point2D.Double(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
+            }
+            
+            //Filling in the parameters, there are 8 doubles and 11 ints
+            double[] paramDoubles = new double[8];
+            int[] paramInts = new int[11];
+
+            for (int i = 0; i < 8; i++) {
+                paramDoubles[i] = Double.parseDouble(br.readLine());
+            }
+
+            for (int i = 0; i < 11; i++) {
+                paramInts[i] = Integer.parseInt(br.readLine());
+            }
+
+            parameters = new Parameters(paramDoubles, paramInts);
+            
+            //putting LCM values into the martix
+            for (int i = 0; i < VECTOR_SIZE; i++) {
+                String row = br.readLine();
+                String[] column = row.split(" ");
+
+                for(int j = 0; j < VECTOR_SIZE; j++){
+                    logConMatrix[i][j] = LogicalConnectors.valueOf(column[j]);
+                }
+            }
+
+            for (int i = 0; i < VECTOR_SIZE; i++) {
+                String value = br.readLine();
+                prelimUnlockVector[i] = Boolean.parseBoolean(value);
+            }
+        }catch(IOException e){
+            System.out.println(e);
+        }
+    }
 
     public boolean lic0holds() {
         return false;
@@ -105,6 +162,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
+        getInput("testfiles/testfile.txt");
+        System.out.println(lic3holds(points, parameters.getArea1()));
+        
     }
 }
