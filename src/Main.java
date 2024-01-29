@@ -21,6 +21,13 @@ public class Main {
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
     public boolean lic0holds() {
+        // TODO add unit tests
+        double threshold = parameters.getLength1();
+        for (int i = 0; i < numPoints - 1; i++) {
+            if (points[i].distance(points[i+1]) > threshold) {
+                return true;
+            }
+        }
         return false;
     }
 
