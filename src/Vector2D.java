@@ -1,6 +1,6 @@
 public record Vector2D(double x, double y) {
     public Vector2D add(Vector2D that) {
-        return new Vector2D(this.x + that.x, that.x + that.y);
+        return new Vector2D(this.x + that.x, this.y + that.y);
     }
 
     public double dotProduct(Vector2D that) {
