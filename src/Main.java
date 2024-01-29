@@ -20,63 +20,63 @@ public class Main {
     boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
-    public boolean lic0holds() {
+    static public boolean lic0holds() {
         return false;
     }
 
-    public boolean lic1holds() {
+    static public boolean lic1holds() {
         return false;
     }
 
-    public boolean lic2holds() {
+    static public boolean lic2holds() {
         return false;
     }
 
-    public boolean lic3holds() {
+    static public boolean lic3holds() {
         return false;
     }
 
-    public boolean lic4holds() {
+    static public boolean lic4holds() {
         return false;
     }
 
-    public boolean lic5holds() {
+    static public boolean lic5holds() {
         return false;
     }
 
-    public boolean lic6holds() {
+    static public boolean lic6holds() {
         return false;
     }
 
-    public boolean lic7holds() {
+    static public boolean lic7holds() {
         return false;
     }
 
-    public boolean lic8holds() {
+    static public boolean lic8holds() {
         return false;
     }
 
-    public boolean lic9holds() {
+    static public boolean lic9holds() {
         return false;
     }
 
-    public boolean lic10holds() {
+    static public boolean lic10holds() {
         return false;
     }
 
-    public boolean lic11holds() {
+    static public boolean lic11holds() {
         return false;
     }
 
-    public boolean lic12holds() {
+    static public boolean lic12holds() {
         return false;
     }
 
-    public boolean lic13holds() {
+    static public boolean lic13holds() {
         return false;
     }
 
-    public boolean lic14holds() {
+    static public boolean lic14holds() {
         return false;
     }
 
