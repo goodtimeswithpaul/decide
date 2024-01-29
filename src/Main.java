@@ -1,3 +1,5 @@
+import java.awt.geom.Point2D;
+
 public class Main {
     final int VECTOR_SIZE = 15;
 
@@ -9,7 +11,7 @@ public class Main {
 
     // --- Inputs ---
     int numPoints;
-    Vector2D[] points;
+    Point2D[] points;
     Parameters parameters;
     LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
