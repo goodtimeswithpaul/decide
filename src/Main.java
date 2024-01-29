@@ -11,8 +11,8 @@ public class Main {
 
     // --- Inputs ---
     int numPoints;
-    int points;
-    // parameters
+    Point2D[] points;
+    Parameters parameters;
     LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
 
@@ -105,6 +105,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+
     }
 }
