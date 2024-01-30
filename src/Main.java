@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class Main {
     final static int VECTOR_SIZE = 15;
+    final static double pi = 3.1415626535;
 
     public enum LogicalConnectors {
         ANDD,
@@ -78,6 +79,27 @@ public class Main {
             System.out.println(e);
         }
     }
+
+    public static double getAngle(Point2D vertex, Point2D before, Point2D after){
+
+        //vetor 1
+        double vec1X = before.getX() - vertex.getX();
+        double vec1Y = before.getY() - vertex.getY();
+        //vector 2
+        double vec2X = after.getX() - vertex.getX();
+        double vec2Y = after.getY() - vertex.getY();
+
+        //Dot product
+        double dotProduct = vec1X*vec2X + vec1Y*vec2Y;
+
+        //Magnitude of vectors
+        double mag1 = Math.sqrt(vec1X*vec1X + vec1Y*vec1Y);
+        double mag2 = Math.sqrt(vec2X*vec2X + vec2Y*vec2Y);
+
+        double angleInRadians = Math.acos(dotProduct / (mag1*mag2));
+
+        return angleInRadians;
+    }
     
     public static boolean lic0holds(Point2D[] points, double length1) {
         return false;
@@ -88,6 +110,16 @@ public class Main {
     }
 
     public static boolean lic2holds(Point2D[] points, double epsilon) {
+        if((points.length < 3) || epsilon < 0 || epsilon >= pi) return false;
+        for(int i = 1; i <(points.length - 1); i++){
+            if(!(points[i].equals(points[i-1])) && !(points[i].equals(points[i+1]))){
+                double angle = getAngle(points[i], points[i-1], points[i+1]);
+                double angleR = Math.abs(Math.toRadians(angle));
+                if(angleR > (pi + epsilon) || angleR < (pi - epsilon)){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -163,6 +195,7 @@ public class Main {
 
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
+        System.out.println(lic2holds(points, parameters.getEpsilon()));
         System.out.println(lic3holds(points, parameters.getArea1()));
     }
 }
