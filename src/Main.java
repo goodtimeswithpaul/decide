@@ -113,11 +113,11 @@ public class Main {
     }
 
     public static boolean lic4holds(Point2D[] points, int qPoints, int quads) {
-        if (2 > qPoints || numPoints < qPoints || 1 > quads || 3 > quads) {
+        if (!((2 <= qPoints && qPoints <= numPoints) && (1 <= quads && quads <= 3))        ) {
             return false;
         }
 
-        int quadCount[] = new int[4];
+        int[] quadCount = new int[4];
 
         for (int i = 0; i < points.length - qPoints; i++) {
             
