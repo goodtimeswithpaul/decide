@@ -183,7 +183,36 @@ public class Main {
         return false;
     }
 
-    public static boolean lic14holds(Point2D[] points, int numPoints, int ePoints, int fPoints, double area1, double area2) {
+    public static boolean lic14holds(Point2D[] points, double area1, double area2, int ePts, int fPts) {
+        if (points == null || points.length < 5 || area2 < 0 || ePts < 1 || fPts < 1 || ePts + fPts > points.length - 3) {
+            throw new IllegalArgumentException("Invalid input parameters.");
+        }
+
+        Point2D p1;
+        Point2D p2;
+        Point2D p3;
+        Point2D p4;
+        Point2D p5;
+        Point2D p6;
+
+        for (int i = 0; i <= points.length - ePts - fPts; i++) {
+            p1 = points[i];
+            p2 = points[i + ePts];
+            p3 = points[i + ePts + fPts];
+
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
+                for (int j = i + ePts + fPts; j <= points.length - ePts - fPts; j++) {
+                    p4 = points[j];
+                    p5 = points[j + ePts];
+                    p6 = points[j + ePts + fPts];
+
+                    if (calculateTriangleArea(p4, p5, p6) < area2) {
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
