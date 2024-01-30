@@ -31,7 +31,7 @@ public class Main {
         try {
             br = new BufferedReader(new FileReader(filename));
 
-            numPoints = Integer.parseInt(br.readLine()); //Line 1
+            numPoints = Integer.parseInt(br.readLine());
 
             if(numPoints < 3) {
                 br.close();
