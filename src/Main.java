@@ -2,6 +2,7 @@ import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 public class Main {
     final static int VECTOR_SIZE = 15;
@@ -112,8 +113,36 @@ public class Main {
     }
 
     public static boolean lic4holds(Point2D[] points, int qPoints, int quads) {
-        if(2 > qPoints || numPoints < qPoints || 1 > quads || 3 > quads){
+        if (2 > qPoints || numPoints < qPoints || 1 > quads || 3 > quads) {
             return false;
+        }
+
+        int quadCount[] = new int[4];
+
+        for (int i = 0; i < points.length - qPoints; i++) {
+            
+            for (int j = 0; j < 4; j++){
+                quadCount[j] = 0;
+            }
+
+            for (int j = 0; j < qPoints; j++) {
+                double x = points[i+j].getX();
+                double y = points[i+j].getY();
+
+                if (x >= 0 && y >= 0) {
+                    quadCount[0] = 1; // Quadrant I
+                } else if (x < 0 && y >= 0) {
+                    quadCount[1] = 1; // Quadrant II
+                } else if (x >= 0 && y < 0) {
+                    quadCount[2] = 1; // Quadrant III
+                } else {
+                    quadCount[3] = 1; // Quadrant IV
+                }
+            }
+
+            if (IntStream.of(quadCount).sum() > quads){
+                return true;
+            }
         }
         
         return false;
