@@ -111,7 +111,11 @@ public class Main {
         return false;
     }
 
-    public static boolean lic4holds(Point2D[] points, int numPoints, int qPoints, int quads) {
+    public static boolean lic4holds(Point2D[] points, int qPoints, int quads) {
+        if(2 > qPoints || numPoints < qPoints || 1 > quads || 3 > quads){
+            return false;
+        }
+        
         return false;
     }
 
