@@ -25,7 +25,7 @@ public class Main {
     boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
-    public static void getInput(String filename){
+    public static void getInput(String filename) {
         BufferedReader br;
 
         try{
