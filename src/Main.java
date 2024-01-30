@@ -74,7 +74,7 @@ public class Main {
                 String value = br.readLine();
                 prelimUnlockVector[i] = Boolean.parseBoolean(value);
             }
-        }catch(IOException e){
+        } catch(IOException e) {
             System.out.println(e);
         }
     }
