@@ -28,7 +28,7 @@ public class Main {
     public static void getInput(String filename) {
         BufferedReader br;
 
-        try{
+        try {
             br = new BufferedReader(new FileReader(filename));
 
             numPoints = Integer.parseInt(br.readLine()); //Line 1
