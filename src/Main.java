@@ -78,20 +78,20 @@ public class Main {
             System.out.println(e);
         }
     }
-
-    public boolean lic0holds() {
+    
+    public static boolean lic0holds(Point2D points, double length1) {
         return false;
     }
 
-    public boolean lic1holds() {
+    public static boolean lic1holds(Point2D points, double radius1) {
         return false;
     }
 
-    public boolean lic2holds() {
+    public static boolean lic2holds(Point2D points, double epsilon) {
         return false;
     }
 
-    public static boolean lic3holds(Point2D[] points, double area) {
+    public static boolean lic3holds(Point2D points, double area1) {
         if (points == null || points.length < 3) {
             throw new IllegalArgumentException("At least three points are required.");
         }
@@ -103,7 +103,7 @@ public class Main {
             p2 = points[i + 1];
             p3 = points[i + 2];
 
-            if (calculateTriangleArea(p1, p2, p3) > area) {
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
                 return true;
             }
         }
@@ -111,47 +111,47 @@ public class Main {
         return false;
     }
 
-    public boolean lic4holds() {
+    public static boolean lic4holds(Point2D points, int numPoints, int qPoints, int quads) {
         return false;
     }
 
-    public boolean lic5holds() {
+    public static boolean lic5holds(Point2D points) {
         return false;
     }
 
-    public boolean lic6holds() {
+    public static boolean lic6holds(Point2D points, int numPoints, int nPoints, double dist) {
         return false;
     }
 
-    public boolean lic7holds() {
+    public static boolean lic7holds(Point2D points, int numPoints, int kPoints, double length1) {
         return false;
     }
 
-    public boolean lic8holds() {
+    public static boolean lic8holds(Point2D points, int numPoints, int aPoints, int bPoints, double radius1) {
         return false;
     }
 
-    public boolean lic9holds() {
+    public static boolean lic9holds(Point2D points, int numPoints, int cPoints, int dPoints, double epsilon) {
         return false;
     }
 
-    public boolean lic10holds() {
+    public static boolean lic10holds(Point2D points, int numPoints, int ePoints, int fPoints, double area1) {
         return false;
     }
 
-    public boolean lic11holds() {
+    public static boolean lic11holds(Point2D points, int numPoints, int gPoints) {
         return false;
     }
 
-    public boolean lic12holds() {
+    public static boolean lic12holds(Point2D points, int numPoints, int kPoints, double length1, double length2) {
         return false;
     }
 
-    public boolean lic13holds() {
+    public static boolean lic13holds(Point2D points, int numPoints, int aPoints, int bPoints, double radius1, double radius2) {
         return false;
     }
 
-    public boolean lic14holds() {
+    public static boolean lic14holds(Point2D points, int numPoints, int ePoints, int fPoints, double area1, double area2) {
         return false;
     }
 
