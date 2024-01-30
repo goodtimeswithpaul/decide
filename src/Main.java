@@ -65,7 +65,7 @@ public class Main {
                 String row = br.readLine();
                 String[] column = row.split(" ");
 
-                for(int j = 0; j < VECTOR_SIZE; j++){
+                for(int j = 0; j < VECTOR_SIZE; j++) {
                     logConMatrix[i][j] = LogicalConnectors.valueOf(column[j]);
                 }
             }
