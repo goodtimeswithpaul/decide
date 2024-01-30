@@ -44,6 +44,31 @@ public class Parameters {
         this.area2 = area2;
     }
 
+    public Parameters(double[] doubles, int[] ints){
+        length1 = doubles[0];
+        radius1 = doubles[1];
+        epsilon = doubles[2];
+        area1 = doubles[3];
+        q_pts = ints[0];
+        quads = ints[1];
+        dist = doubles[4];
+        n_pts = ints[2];
+        k_pts = ints[3];
+        a_pts = ints[4];
+        b_pts = ints[5];
+        c_pts = ints[6];
+        d_pts = ints[7];
+        e_pts = ints[8];
+        f_pts = ints[9];
+        g_pts = ints[10];
+        length2 = doubles[5];
+        radius2 = doubles[6];
+        area2 = doubles[7];
+
+
+
+    }
+
     public double getLength1(){
         return length1;
     }
