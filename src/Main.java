@@ -102,6 +102,10 @@ public class Main {
     }
 
     public static boolean lic0holds(Point2D[] points, double length1) {
+        if (!(0 <= length1)) {
+            return false;
+        }
+
         double threshold = parameters.getLength1();
         for (int i = 0; i < numPoints - 1; i++) {
             if (points[i].distance(points[i+1]) > threshold) {
