@@ -40,7 +40,7 @@ public class Main {
 
             points = new Point2D[numPoints];
             
-            //Putting the points into array
+            // Putting the points into array
             for (int i = 0; i < numPoints; i++) {
                 String[] coordinates = br.readLine().split(" ");
                 points[i] = new Point2D.Double(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
