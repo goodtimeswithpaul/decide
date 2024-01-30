@@ -33,7 +33,7 @@ public class Main {
 
             numPoints = Integer.parseInt(br.readLine()); //Line 1
 
-            if(numPoints < 3){
+            if(numPoints < 3) {
                 br.close();
                 throw new IllegalArgumentException("AT LEAST 3 POINTS!!!");
             }
