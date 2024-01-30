@@ -26,7 +26,7 @@ public class Main {
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
     public static void getInput(String filename){
-        BufferedReader br = null;
+        BufferedReader br;
 
         try{
             br = new BufferedReader(new FileReader(filename));
