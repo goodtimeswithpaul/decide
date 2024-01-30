@@ -35,7 +35,7 @@ public class Main {
 
             if(numPoints < 3) {
                 br.close();
-                throw new IllegalArgumentException("AT LEAST 3 POINTS!!!");
+                throw new IllegalArgumentException("At least three points are required.");
             }
 
             points = new Point2D[numPoints];
