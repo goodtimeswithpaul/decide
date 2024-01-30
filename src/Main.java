@@ -110,7 +110,7 @@ public class Main {
     }
 
     public static boolean lic2holds(Point2D[] points, double epsilon) {
-        if((points.length < 3)) return false;
+        if((points.length < 3) || epsilon < 0 || epsilon >= pi) return false;
         for(int i = 1; i <(points.length - 1); i++){
             if(!(points[i].equals(points[i-1])) && !(points[i].equals(points[i+1]))){
                 double angle = getAngle(points[i], points[i-1], points[i+1]);
