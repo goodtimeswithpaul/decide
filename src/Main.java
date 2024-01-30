@@ -60,7 +60,7 @@ public class Main {
 
             parameters = new Parameters(paramDoubles, paramInts);
             
-            //putting LCM values into the martix
+            // Putting LCM values into the martix
             for (int i = 0; i < VECTOR_SIZE; i++) {
                 String row = br.readLine();
                 String[] column = row.split(" ");
