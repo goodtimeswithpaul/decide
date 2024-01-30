@@ -167,7 +167,25 @@ public class Main {
         return false;
     }
 
-    public static boolean lic10holds(Point2D[] points, int numPoints, int ePoints, int fPoints, double area1) {
+    public static boolean lic10holds(Point2D[] points, double area1, int ePts, int fPts) {
+        if (points == null || points.length < 5 || ePts < 1 || fPts < 1 || ePts + fPts > points.length - 3) {
+            throw new IllegalArgumentException("Invalid input parameters.");
+        }
+
+        Point2D p1;
+        Point2D p2;
+        Point2D p3;
+        
+        for (int i = 0; i <= points.length - ePts - fPts; i++) {
+            p1 = points[i];
+            p2 = points[i + ePts];
+            p3 = points[i + ePts + fPts];
+
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
+                return true;
+            }
+        }
+
         return false;
     }
 
