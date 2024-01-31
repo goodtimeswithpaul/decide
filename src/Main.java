@@ -206,7 +206,7 @@ public class Main {
     }
 
     public static boolean lic9holds(Point2D[] points, int cPoints, int dPoints, double epsilon) {
-        if (numPoints < 5 || 1 > cPoints || 1 > dPoints || (cPoints + dPoints) > (numPoints-3)) {
+        if (points.length < 5 || 1 > cPoints || 1 > dPoints || (cPoints + dPoints) > (points.length-3)) {
             throw new IllegalArgumentException("At least 5 points are required, c_pts and d_pts must be eqaul to or great than zero, their sum must be equal to or smaller than the number or point minus 3");
         }
 
@@ -252,8 +252,5 @@ public class Main {
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
         System.out.println(lic2holds(points, parameters.getEpsilon()));
-        System.out.println(lic3holds(points, parameters.getArea1()));
-        System.out.println(lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()));
-
     }
 }

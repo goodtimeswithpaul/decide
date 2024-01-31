@@ -30,28 +30,6 @@ public class MainTest {
      */
     @Test
 
-    public void testLIC9() {
-        Point2D[] points1 = {new Point2D.Double(0, 0),
-            new Point2D.Double(0, 1),
-            new Point2D.Double(0, 2),
-            new Point2D.Double(0, 3),
-            new Point2D.Double(1, 4),
-            new Point2D.Double(2, 5)};
-
-        Point2D[] points2 = {new Point2D.Double(0, 0),
-            new Point2D.Double(0, 1),
-            new Point2D.Double(0, 2),
-            new Point2D.Double(0, 3),
-            new Point2D.Double(1, 4),
-            new Point2D.Double(2, 5)};
-        
-        assertFalse(Main.lic9holds(points1, 1, 1, 0.1));
-        assertTrue(Main.lic9holds(points1, 1, 1, 3));
-    }
-    public void testExample() {
-        assertTrue(true);
-    }
-
     public void testLIC0() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                             new Point2D.Double(0, 1),
@@ -79,5 +57,42 @@ public class MainTest {
         assertThrows(IllegalArgumentException.class, () -> {
             Main.lic0holds(points1, -19);
         });
+    }
+
+    @Test
+    public void testLIC9() {
+        Point2D[] points1 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+            new Point2D.Double(2, 5)};
+
+        Point2D[] points2 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+            new Point2D.Double(2, 5)};
+        
+        // Positive tests
+        assertTrue(Main.lic9holds(points1, 1, 1, 0.1));
+        
+        // Negative test
+        assertFalse(Main.lic9holds(points1, 1, 1, 3));
+        
+         // Params checking
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points2, 0, 1, 0.1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points1, 1, 0, 0.1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points1, 1, 0, 1000);
+        });
+    }
+    public void testExample() {
+        assertTrue(true);
     }
 }
