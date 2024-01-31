@@ -240,7 +240,18 @@ public class Main {
         return false;
     }
 
-    public static boolean lic11holds(Point2D[] points, int numPoints, int gPoints) {
+    public static boolean lic11holds(Point2D[] points, int gPoints) {
+        if (points.length < 3 || 1 > gPoints || (points.length - 2) < gPoints) {
+            throw new IllegalArgumentException("At least 3 points are required, g_pts must be equal to or smaller than the number or point minus 2\"");
+        }
+
+        for (int i = 0; i < points.length - gPoints - 1; i++) {
+            int j = i + gPoints + 1;
+            if (points[i].getX() > points[j].getX()) {
+                return true;
+            }            
+        }
+
         return false;
     }
 
