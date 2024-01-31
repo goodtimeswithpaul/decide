@@ -41,13 +41,13 @@ public class Main {
             }
 
             points = new Point2D[numPoints];
-            
+
             // Putting the points into array
             for (int i = 0; i < numPoints; i++) {
                 String[] coordinates = br.readLine().split(" ");
                 points[i] = new Point2D.Double(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
             }
-            
+
             //Filling in the parameters, there are 8 doubles and 11 ints
             double[] paramDoubles = new double[8];
             int[] paramInts = new int[11];
@@ -61,7 +61,7 @@ public class Main {
             }
 
             parameters = new Parameters(paramDoubles, paramInts);
-            
+
             // Putting LCM values into the martix
             for (int i = 0; i < VECTOR_SIZE; i++) {
                 String row = br.readLine();
@@ -101,8 +101,17 @@ public class Main {
 
         return angleInRadians;
     }
-    
+
     public static boolean lic0holds(Point2D[] points, double length1) {
+        if (!(0 <= length1 && points.length >= 2)) {
+            throw new IllegalArgumentException("At least 2 points are required, and length should be positive or zero.");
+        }
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].distance(points[i+1]) > length1) {
+                return true;
+            }
+        }
         return false;
     }
 
