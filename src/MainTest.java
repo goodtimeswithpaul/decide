@@ -119,4 +119,21 @@ public class MainTest {
         assertFalse(Main.lic7holds(points2, 8, 0.5));
 
     }
+
+    @Test
+    public void testLIC8() {
+        Point2D[] testPoints = {new Point2D.Double(0,1),
+            new Point2D.Double(5,5),
+            new Point2D.Double(6,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(3,4),
+            new Point2D.Double(8,1),
+            new Point2D.Double(1,1)};
+        // Positive Test
+        assertTrue(Main.lic8holds(testPoints, 7, 2, 2,0.5));
+        // Negative Test
+        assertFalse(Main.lic8holds(testPoints, 7, 2, 2,1));
+        // Negative Test
+        assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
+    }
 }
