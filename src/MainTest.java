@@ -31,15 +31,45 @@ public class MainTest {
         assertTrue(true);
     }
 
+        @Test
+    public void testLIC0() {
+        Point2D[] points1 = {new Point2D.Double(0, 0),
+                            new Point2D.Double(0, 1),
+                            new Point2D.Double(0, 5)};
+
+        Point2D[] points2 = {new Point2D.Double(0, 0)};
+
+        Point2D[] points3 = {new Point2D.Double(0, 0),
+                new Point2D.Double(0, 1),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(0, 10),
+                new Point2D.Double(15, 1),
+                new Point2D.Double(100, 100)};
+        // Negative test
+        assertFalse(Main.lic0holds(points1, 4));
+
+        // Positive tests
+        assertTrue(Main.lic0holds(points1, 3));
+        assertTrue(Main.lic0holds(points3, 60));
+
+        // Params checking
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic0holds(points2, 1000);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic0holds(points1, -19);
+        });
+    }
+
     @Test
     public void testLIC7() {
         Point2D[] points1 = {new Point2D.Double(0,0),
-                            new Point2D.Double(0,1),
-                            new Point2D.Double(0,0),
-                            new Point2D.Double(0,0),
-                            new Point2D.Double(0,0),
-                            new Point2D.Double(0,10),
-                            new Point2D.Double(0,0)};
+                new Point2D.Double(0,1),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,10),
+                new Point2D.Double(0,0)};
 
         // The second and the 6th point are more than 8 away
         assertTrue(Main.lic7holds(points1, 3, 8));

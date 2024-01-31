@@ -101,8 +101,17 @@ public class Main {
 
         return angleInRadians;
     }
-    
+
     public static boolean lic0holds(Point2D[] points, double length1) {
+        if (!(0 <= length1 && points.length >= 2)) {
+            throw new IllegalArgumentException("At least 2 points are required, and length should be positive or zero.");
+        }
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].distance(points[i+1]) > length1) {
+                return true;
+            }
+        }
         return false;
     }
 
