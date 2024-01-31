@@ -160,15 +160,15 @@ public class Main {
 
         int[] quadCount = new int[4];
 
-        for (int i = 0; i < points.length - qPoints; i++) {
+        for (int i = 0; i <= (points.length - qPoints); i++) {
             
             for (int j = 0; j < 4; j++){
                 quadCount[j] = 0;
             }
 
             for (int j = 0; j < qPoints; j++) {
-                double x = points[i+j].getX();
-                double y = points[i+j].getY();
+                double x = points[i + j].getX();
+                double y = points[i + j].getY();
 
                 if (x >= 0 && y >= 0) {
                     quadCount[0] = 1; // Quadrant I
@@ -181,7 +181,7 @@ public class Main {
                 }
             }
 
-            if (IntStream.of(quadCount).sum() > quads){
+            if (IntStream.of(quadCount).sum() > quads) {
                 return true;
             }
         }

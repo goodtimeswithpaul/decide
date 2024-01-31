@@ -64,8 +64,8 @@ public class MainTest {
     @Test
     public void testLIC4() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
-                            new Point2D.Double(0, -4),
-                            new Point2D.Double(-1, 4)};
+                            new Point2D.Double(0, -1),
+                            new Point2D.Double(-1, 0)};
 
         Point2D[] points2 = {new Point2D.Double(0, 0),
                             new Point2D.Double(0, 1),
@@ -77,8 +77,7 @@ public class MainTest {
         assertFalse(Main.lic4holds(points2, 2, 2));
 
         // Positive tests
-        assertTrue(Main.lic4holds(points1, 3,3));
-        assertTrue(Main.lic4holds(points2, 2, 2));
+        assertTrue(Main.lic4holds(points1, 3, 2));
 
         // Params checking
         assertThrows(IllegalArgumentException.class, () -> {
