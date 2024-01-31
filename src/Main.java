@@ -181,6 +181,15 @@ public class Main {
     }
 
     public static boolean lic5holds(Point2D[] points) {
+        if (points == null || !(points.length >= 2)) {
+            throw new IllegalArgumentException("At least 2 points are required.");
+        }
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i + 1].getX() - points[i].getX() < 0) {
+                return true;
+            }
+        }
         return false;
     }
 
