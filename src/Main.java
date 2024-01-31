@@ -102,8 +102,17 @@ public class Main {
 
         return angleInRadians;
     }
-    
+
     public static boolean lic0holds(Point2D[] points, double length1) {
+        if (!(0 <= length1 && points.length >= 2)) {
+            throw new IllegalArgumentException("At least 2 points are required, and length should be positive or zero.");
+        }
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].distance(points[i+1]) > length1) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -226,6 +235,15 @@ public class Main {
     }
 
     public static boolean lic5holds(Point2D[] points) {
+        if (points == null || !(points.length >= 2)) {
+            throw new IllegalArgumentException("At least 2 points are required.");
+        }
+
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i + 1].getX() - points[i].getX() < 0) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -233,7 +251,25 @@ public class Main {
         return false;
     }
 
-    public static boolean lic7holds(Point2D[] points, int numPoints, int kPoints, double length1) {
+    public static boolean lic7holds(Point2D[] points, int kPoints, double length1) {
+        if (points == null) {
+            throw new IllegalArgumentException("points is null.");
+        }
+
+        if (points.length < Math.max(3, (kPoints + 2))) {
+            return false;
+        }
+
+        if (!(1 <= kPoints && kPoints <= points.length - 2) || !(length1 >= 0)) {
+            throw new IllegalArgumentException("kPoints is invalid.");
+        }
+
+        for (int i = 0; i < points.length - kPoints - 1; i++) {
+            if (points[i].distance(points[i + kPoints + 1]) > length1) {
+                return true;
+            }
+        }
+
         return false;
     }
 
