@@ -324,8 +324,8 @@ public class Main {
 
     }
 
-    private static boolean[] calcCMV() {
-        return new boolean[]{
+    private static void calcCMV() {
+        conditionsMetVector = new boolean[] {
             lic0holds(points, parameters.getLength1()),
             lic1holds(points, parameters.getRadius1()),
             lic2holds(points, parameters.getEpsilon()),
@@ -344,15 +344,9 @@ public class Main {
         };
     }
 
-    public static void main(String[] args) {
-        getInput("testfiles/testfile.txt");
-        System.out.println(lic2holds(points, parameters.getEpsilon()));
-        System.out.println(lic3holds(points, parameters.getArea1()));
-
-        conditionsMetVector = calcCMV();
-
-        // Combining LCM and CMV to calculate PUM
-        // Outerloop: go through row. Innerloop: go through column.
+    // Combining LCM and CMV to calculate PUM
+    // Outerloop: go through row. Innerloop: go through column.
+    private static void calcPUM() {
         for (int i = 0; i < VECTOR_SIZE*VECTOR_SIZE; i++) {
             for (int j = 0; j < VECTOR_SIZE; j++) {
                 if (logConMatrix[i][j].equals(LogicalConnectors.ANDD)) { // If it's a AND
@@ -366,6 +360,10 @@ public class Main {
                 }
             }
         }
-
+    }
+    public static void main(String[] args) {
+        getInput("testfiles/testfile.txt");
+        calcCMV();
+        calcPUM();
     }
 }
