@@ -28,8 +28,8 @@ public class MainTest {
      * all test should be named:
      * testSomethingThatDescribesTheTest()
      */
-    @Test
 
+    @Test
     public void testLIC0() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                             new Point2D.Double(0, 1),
@@ -57,6 +57,15 @@ public class MainTest {
         assertThrows(IllegalArgumentException.class, () -> {
             Main.lic0holds(points1, -19);
         });
+    }
+  
+    @Test
+    public void testLIC1(){
+        // Positive test
+        Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
+        assertTrue(Main.lic1holds(testPoints,0.5));
+        // Negative test
+        assertFalse(Main.lic1holds(testPoints,1));
     }
 
     public void testLIC5() {
