@@ -12,7 +12,7 @@ public class Main {
     public enum LogicalConnectors {
         ANDD,
         ORR,
-        NOTUSED;
+        NOTUSED
     }
 
     // --- Inputs ---
@@ -447,14 +447,14 @@ public class Main {
     // Combining LCM and CMV to calculate PUM
     // Outerloop: go through row. Innerloop: go through column.
     private static void calcPUM() {
-        for (int i = 0; i < VECTOR_SIZE*VECTOR_SIZE; i++) {
-            for (int j = 0; j < VECTOR_SIZE; j++) {
-                if (logConMatrix[i][j].equals(LogicalConnectors.ANDD)) { // If it's a AND
-                    prelimUnlockMatrix[i][j] = conditionsMetVector[i] && conditionsMetVector[j];
-                }else if (logConMatrix[i][j].equals(LogicalConnectors.ORR)) { // If it's a OR
-                    prelimUnlockMatrix[i][j] = conditionsMetVector[i] || conditionsMetVector[j];
-                }else if (logConMatrix[i][j].equals(LogicalConnectors.ORR)) { // If it's a NOTUSED
-                    prelimUnlockMatrix[i][j] = true;
+        for (int rowId = 0; rowId < VECTOR_SIZE; rowId++) {
+            for (int colId = 0; colId < VECTOR_SIZE; colId++) {
+                if (logConMatrix[rowId][colId].equals(LogicalConnectors.ANDD)) { // If it's a AND
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] && conditionsMetVector[colId];
+                }else if (logConMatrix[rowId][colId].equals(LogicalConnectors.ORR)) { // If it's a OR
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] || conditionsMetVector[colId];
+                }else if (logConMatrix[rowId][colId].equals(LogicalConnectors.NOTUSED)) { // If it's a NOTUSED
+                    prelimUnlockMatrix[rowId][colId] = true;
                 }else {
                     throw new IllegalArgumentException("There is something wrong in the LCM");
                 }
