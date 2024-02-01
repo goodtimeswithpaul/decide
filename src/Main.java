@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -116,6 +117,50 @@ public class Main {
     }
 
     public static boolean lic1holds(Point2D[] points, double radius1) {
+
+        if(radius1 < 0){
+            return false;
+        }
+        Point2D p1, p2, p3;
+        double[] angles = new double[3];
+        for (int i = 0; i < points.length-2; i++) {
+
+            p1 = points[i];
+            p2 = points[i+1];
+            p3 = points[i+2];
+
+            angles[0] = getAngle(p1, p2, p3);
+            angles[1] = getAngle(p2, p1, p3);
+            angles[2] = getAngle(p3, p2, p1);
+            
+            for (int j = 0; j < 3; j++) {
+                if (angles[j] > pi) {
+                    angles[j] = 2*pi - angles[j];
+                }
+
+                if (angles[j] > pi/2) {
+                    
+                    if(j==0){ // Angle when p1 is vertex
+                        if (calculateDistance(p2, p3)/2 > radius1) {
+                            return true;
+                         }
+                    } else if(j==1){ //Angle when p2 is vertex
+                        if (calculateDistance(p1, p3)/2 > radius1) {
+                            return true;
+                        }
+                    } else { // Angle when p3 is vertex
+                        if (calculateDistance(p1, p2)/2 > radius1){
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (getCircumradius(p1, p2, p3) > radius1) {
+                return true;
+            }
+            
+        }
         return false;
     }
 
@@ -308,7 +353,22 @@ public class Main {
         double area = Math.sqrt(s*(s-pToStart)*(s-pToEnd)*(s-startToEnd));
 
         return (2*area)/startToEnd;
+    }
+  
+    private static double calculateDistance(Point2D p1, Point2D p2) {
+        return Math.sqrt(Math.pow(p1.getX()-p2.getX(),2) + Math.pow(p1.getY()-p2.getY(),2));
+    }
 
+    private static double getCircumradius(Point2D p1, Point2D p2, Point2D p3) {
+        double lengthA = calculateDistance(p1,p2);
+        double lengthB = calculateDistance(p1,p3);
+        double lengthC = calculateDistance(p2,p3);
+
+        // Find area using Heron's formula
+        double s = (lengthA + lengthB + lengthC)/2;
+        double area = Math.sqrt(s*(s-lengthA)*(s-lengthB)*(s-lengthC));
+
+        return (lengthA*lengthB*lengthC)/(4*area);
     }
 
     public static void main(String[] args) {
