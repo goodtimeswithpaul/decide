@@ -244,19 +244,17 @@ public class MainTest {
             new Point2D.Double(2, 5)};
         
         // Positive tests
-        assertTrue(Main.lic9holds(points1, 1, 1, 0.1));
+        assertTrue(Main.lic9holds(points1, 1, 1, 0.1)); // Return true because for points (0,0),(0,2),(1,4) the angle is 2.68, satisfies the condition angle < pi - 0.1
+        assertFalse(Main.lic9holds(points1, 1, 1, 3)); // Return false because there both 2.68 and angle 2.36 build by(0,1),(0,3),(2,5) does not satisfy the conditions
         
         // Negative test
-        assertFalse(Main.lic9holds(points1, 1, 1, 3));
-        
-         // Params checking
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> { // c_pts < 1, invalid input 
             Main.lic9holds(points2, 0, 1, 0.1);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> { // d_pts < 1, invalid input 
             Main.lic9holds(points1, 1, 0, 0.1);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> { // episilon > pi, invalid input 
             Main.lic9holds(points1, 1, 0, 1000);
         });
     }
