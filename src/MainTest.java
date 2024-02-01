@@ -87,6 +87,29 @@ public class MainTest {
     }
 
     @Test
+    public void testLIC6() {
+        Point2D[] points = {new Point2D.Double(0,0),
+            new Point2D.Double(0,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(2,0),
+            new Point2D.Double(5,0),
+            new Point2D.Double(0,10),
+            new Point2D.Double(0,10),
+            new Point2D.Double(0,0)};
+        
+        // Positive Test
+        assertTrue(Main.lic6holds(points, 8, 4, 3));
+        // Positve Test, for when start and end are identical
+        assertTrue(Main.lic6holds(points, 8, 8, 3));
+        // Negative Test
+        assertFalse(Main.lic6holds(points, 8, 4, 100));
+        // Throws exception test
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic6holds(points, 8, 9, 10);
+        });
+    }
+
+    @Test
     public void testLIC7() {
         Point2D[] points1 = {new Point2D.Double(0,0),
                 new Point2D.Double(0,1),

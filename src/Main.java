@@ -203,6 +203,42 @@ public class Main {
     }
 
     public static boolean lic6holds(Point2D[] points, int numPoints, int nPoints, double dist) {
+        if (nPoints < 3 || numPoints < nPoints) {
+            throw new IllegalArgumentException("nPoints must be at least 3 but smaller than or equal to numPoints");
+        }
+
+        if (dist < 0) {
+            throw new IllegalArgumentException("dist must be at least 0 ");
+        }
+
+        if (numPoints < 3) {
+            return false;
+        }
+        Point2D pStart, pEnd;
+
+        for (int i = 0; i < points.length - (nPoints - 1); i++) {
+            pStart = points[i];
+            pEnd = points[i + (nPoints - 1)];
+
+            // If first and last points are identical, check distance between point and all
+            // other points
+            if (pStart.equals(pEnd)) {
+                for (int j = i + 1; j < i + nPoints; j++) {
+                    if (points[j].distance(pStart) > dist) {
+                        return true;
+                    }
+                }
+                // Otherwise, compare distance from point to line that crosses start and end
+                // point
+            } else {
+                for (int j = i + 1; j < i + nPoints; j++) {
+                    if (calculateDistanceToLine(points[j], pStart, pEnd) > dist) {
+                        return true;
+                    }
+                }
+            }
+
+        }
         return false;
     }
 
@@ -260,6 +296,19 @@ public class Main {
         return 0.5 * Math.abs((p1.getX() * (p2.getY() - p3.getY()) +
                                p2.getX() * (p3.getY() - p1.getY()) +
                                p3.getX() * (p1.getY() - p2.getY())));
+    }
+
+    private static double calculateDistanceToLine(Point2D p, Point2D start, Point2D end) {
+        double pToStart = p.distance(start);
+        double pToEnd = p.distance(end);
+        double startToEnd = start.distance(end);
+
+        // Find area using Heron's formula
+        double s = (pToStart + pToEnd + startToEnd)/2;
+        double area = Math.sqrt(s*(s-pToStart)*(s-pToEnd)*(s-startToEnd));
+
+        return (2*area)/startToEnd;
+
     }
 
     public static void main(String[] args) {
