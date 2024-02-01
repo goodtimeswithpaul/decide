@@ -23,10 +23,10 @@ public class Main {
     public static boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
 
     // --- Outputs ---
-    boolean launch;
-    boolean[] conditionsMetVector = new boolean[VECTOR_SIZE];
-    boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
-    boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
+    public static boolean launch;
+    public static boolean[] conditionsMetVector = new boolean[VECTOR_SIZE];
+    public static boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
+    public static boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
     public static void getInput(String filename) {
         BufferedReader br;
@@ -324,9 +324,48 @@ public class Main {
 
     }
 
+    private static boolean[] calcCMV() {
+        return new boolean[]{
+            lic0holds(points, parameters.getLength1()),
+            lic1holds(points, parameters.getRadius1()),
+            lic2holds(points, parameters.getEpsilon()),
+            lic3holds(points, parameters.getArea1()),
+            lic4holds(points, parameters.getQ_pts(), parameters.getQuads()),
+            lic5holds(points),
+            lic6holds(points, numPoints, parameters.getN_pts(), parameters.getDist()),
+            lic7holds(points, parameters.getK_pts(), parameters.getLength1()),
+            lic8holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1()),
+            lic9holds(points, numPoints, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()),
+            lic10holds(points, numPoints, parameters.getE_pts(), parameters.getF_pts(), parameters.getArea1()),
+            lic11holds(points, numPoints, parameters.getG_pts()),
+            lic12holds(points, numPoints, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2()),
+            lic13holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2()),
+            lic14holds(points, numPoints, parameters.getE_pts(), parameters.getF_pts(), parameters.getArea1(), parameters.getArea2())
+        };
+    }
+
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
         System.out.println(lic2holds(points, parameters.getEpsilon()));
         System.out.println(lic3holds(points, parameters.getArea1()));
+
+        conditionsMetVector = calcCMV();
+
+        // Combining LCM and CMV to calculate PUM
+        // Outerloop: go through row. Innerloop: go through column.
+        for (int i = 0; i < VECTOR_SIZE*VECTOR_SIZE; i++) {
+            for (int j = 0; j < VECTOR_SIZE; j++) {
+                if (logConMatrix[i][j].equals(LogicalConnectors.ANDD)) { // If it's a AND
+                    prelimUnlockMatrix[i][j] = conditionsMetVector[i] && conditionsMetVector[j];
+                }else if (logConMatrix[i][j].equals(LogicalConnectors.ORR)) { // If it's a OR
+                    prelimUnlockMatrix[i][j] = conditionsMetVector[i] || conditionsMetVector[j];
+                }else if (logConMatrix[i][j].equals(LogicalConnectors.ORR)) { // If it's a NOTUSED
+                    prelimUnlockMatrix[i][j] = true;
+                }else {
+                    throw new IllegalArgumentException("There is something wrong in the LCM");
+                }
+            }
+        }
+
     }
 }
