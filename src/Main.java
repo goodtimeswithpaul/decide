@@ -28,7 +28,7 @@ public class Main {
     boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
     boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
-    public static void getInput(String filename) {
+    public static void  getInput(String filename) {
         BufferedReader br;
 
         try {
@@ -570,6 +570,29 @@ public class Main {
         double area = Math.sqrt(s*(s-lengthA)*(s-lengthB)*(s-lengthC));
 
         return (lengthA*lengthB*lengthC)/(4*area);
+    }
+
+    public static boolean isIthRowAllTrue(int rowIndex, boolean[][] prelimUnlockMatrix) {
+        for (int j = 0; j < VECTOR_SIZE; j++) {
+            if (j != rowIndex) {
+                if (!prelimUnlockMatrix[rowIndex][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static boolean[] getfinalUnlockVector(boolean[][] prelimUnlockMatrix, boolean[] prelimUnlockVector) {
+        boolean[] result = new boolean[VECTOR_SIZE];
+    
+        // Iterating on the PUM matrix rows
+        for (int row = 0; row < VECTOR_SIZE; row++) {
+            // Thanks to lazy evaluation, isIthRowAllTrue is only called when necessary
+            result[row] = (!prelimUnlockVector[row]) || isIthRowAllTrue(row, prelimUnlockMatrix);
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {
