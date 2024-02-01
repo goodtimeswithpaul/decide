@@ -98,6 +98,24 @@ public class MainTest {
     }
 
     @Test
+    public void testLIC3() {
+        Point2D[] points1 = {
+            new Point2D.Double(0, 0),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(2, 0)
+        };
+
+        double area1 = 1;
+        double area2 = 3;
+        
+        assertTrue(Main.lic3holds(points1, area1));
+        assertFalse(Main.lic3holds(points1, area2));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic3holds(points1, -1);
+        });
+    }
+
+    @Test
     public void testLIC4() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                             new Point2D.Double(0, -1),
@@ -147,6 +165,29 @@ public class MainTest {
             Main.lic5holds(points3);
         });
         assertFalse(Main.lic5holds(points4));
+    }
+
+    @Test
+    public void testLIC6() {
+        Point2D[] points = {new Point2D.Double(0,0),
+            new Point2D.Double(0,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(2,0),
+            new Point2D.Double(5,0),
+            new Point2D.Double(0,10),
+            new Point2D.Double(0,10),
+            new Point2D.Double(0,0)};
+        
+        // Positive Test
+        assertTrue(Main.lic6holds(points, 8, 4, 3));
+        // Positve Test, for when start and end are identical
+        assertTrue(Main.lic6holds(points, 8, 8, 3));
+        // Negative Test
+        assertFalse(Main.lic6holds(points, 8, 4, 100));
+        // Throws exception test
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic6holds(points, 8, 9, 10);
+        });
     }
 
     @Test
@@ -273,5 +314,80 @@ public class MainTest {
         assertFalse(Main.lic8holds(testPoints, 7, 2, 2,1));
         // Negative Test
         assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
+    }
+
+    @Test
+    public void testLIC10() {
+        Point2D[] p1 = {
+            new Point2D.Double(0, 0),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(2, 0),
+            new Point2D.Double(0, 4),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+        };
+
+        double area1 = 1;
+        int e_pts = 1;
+        int f_pts = 2;
+
+
+        assertTrue(Main.lic10holds(p1, area1, e_pts, f_pts));
+        assertFalse(Main.lic10holds(p1, area1 * 5, e_pts, f_pts));
+    }
+  
+    @Test
+    public void testLIC13() {
+        Point2D[] testPoints = {new Point2D.Double(0,1),
+            new Point2D.Double(5,5),
+            new Point2D.Double(6,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(3,4),
+            new Point2D.Double(8,1),
+            new Point2D.Double(1,1)};
+        // Positive Test
+        assertTrue(Main.lic13holds(testPoints, 7, 2, 2,0.5, 1));
+        // Negative Test
+        assertFalse(Main.lic13holds(testPoints, 7, 2, 2,0.5, 0.5));
+    }
+
+    @Test
+    public void testLIC14() {
+        Point2D[] points1 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+                new Point2D.Double(0, 3),
+                new Point2D.Double(1, 4),
+        };
+
+        Point2D[] points2 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+                new Point2D.Double(0, 3),
+                new Point2D.Double(1, 4),
+        };
+
+        Point2D[] points3 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+        };
+
+        int e_pts = 1;
+        int f_pts = 2;
+        double area1 = 3.9;
+        double area2 = 4.1;
+
+        assertTrue(Main.lic14holds(points1, area1, area2, e_pts, f_pts));
+        assertFalse(Main.lic14holds(points1, area1, area1, e_pts, f_pts));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic14holds(points2, area1, area1 - area2, e_pts, f_pts);
+        });
+        assertFalse(Main.lic14holds(points3, area1, area2, e_pts, f_pts));
     }
 }

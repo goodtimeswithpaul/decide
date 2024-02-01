@@ -184,7 +184,7 @@ public class Main {
     }
 
     public static boolean lic3holds(Point2D[] points, double area1) {
-        if (points == null || points.length < 3) {
+        if (points == null || points.length < 3 || area1 < 0) {
             throw new IllegalArgumentException("At least three points are required.");
         }
 
@@ -253,6 +253,42 @@ public class Main {
     }
 
     public static boolean lic6holds(Point2D[] points, int numPoints, int nPoints, double dist) {
+        if (nPoints < 3 || numPoints < nPoints) {
+            throw new IllegalArgumentException("nPoints must be at least 3 but smaller than or equal to numPoints");
+        }
+
+        if (dist < 0) {
+            throw new IllegalArgumentException("dist must be at least 0 ");
+        }
+
+        if (numPoints < 3) {
+            return false;
+        }
+        Point2D pStart, pEnd;
+
+        for (int i = 0; i < points.length - (nPoints - 1); i++) {
+            pStart = points[i];
+            pEnd = points[i + (nPoints - 1)];
+
+            // If first and last points are identical, check distance between point and all
+            // other points
+            if (pStart.equals(pEnd)) {
+                for (int j = i + 1; j < i + nPoints; j++) {
+                    if (points[j].distance(pStart) > dist) {
+                        return true;
+                    }
+                }
+                // Otherwise, compare distance from point to line that crosses start and end
+                // point
+            } else {
+                for (int j = i + 1; j < i + nPoints; j++) {
+                    if (calculateDistanceToLine(points[j], pStart, pEnd) > dist) {
+                        return true;
+                    }
+                }
+            }
+
+        }
         return false;
     }
 
@@ -348,7 +384,25 @@ public class Main {
         return false;
     }
 
-    public static boolean lic10holds(Point2D[] points, int numPoints, int ePoints, int fPoints, double area1) {
+    public static boolean lic10holds(Point2D[] points, double area1, int ePoints, int fPoints) {
+        if (points.length < 5 || ePoints < 1 || fPoints < 1 || ePoints + fPoints > points.length - 3) {
+            return false;
+        }
+
+        Point2D p1;
+        Point2D p2;
+        Point2D p3;
+        
+        for (int i = 0; i < points.length - ePoints - fPoints - 2; i++) {
+            p1 = points[i];
+            p2 = points[i + ePoints + 1];
+            p3 = points[i + ePoints + fPoints + 2];
+
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -394,10 +448,93 @@ public class Main {
     }
 
     public static boolean lic13holds(Point2D[] points, int numPoints, int aPoints, int bPoints, double radius1, double radius2) {
+        if(!lic8holds(points, numPoints, aPoints, bPoints, radius1)){
+            return false;
+        }
+        if(radius2 < 0){
+            return false;
+        }
+        Point2D p1, p2, p3;
+        double[] angles = new double[3];
+        for (int i = 0; i < points.length-(2+aPoints+bPoints); i++) {
+
+            p1 = points[i];
+            p2 = points[i + aPoints + 1];
+            p3 = points[i + aPoints + bPoints +2];
+
+            angles[0] = getAngle(p1, p2, p3);
+            angles[1] = getAngle(p2, p1, p3);
+            angles[2] = getAngle(p3, p2, p1);
+
+            for (int j = 0; j < 3; j++) {
+                if (angles[j] > pi) {
+                    angles[j] = 2*pi - angles[j];
+                }
+
+                if (angles[j] > pi/2) {
+
+                    if(j==0){ // Angle when p1 is vertex
+                        if (calculateDistance(p2, p3)/2 <= radius2) {
+                            return true;
+                         }
+                    } else if(j==1){ //Angle when p2 is vertex
+                        if (calculateDistance(p1, p3)/2 <= radius2) {
+                            return true;
+                        }
+                    } else { // Angle when p3 is vertex
+                        if (calculateDistance(p1, p2)/2 <= radius2){
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (getCircumradius(p1, p2, p3) <= radius2) {
+                return true;
+            }
+
+        }
         return false;
     }
 
-    public static boolean lic14holds(Point2D[] points, int numPoints, int ePoints, int fPoints, double area1, double area2) {
+    public static boolean lic14holds(Point2D[] points, double area1, double area2, int ePts, int fPts) {
+        if (area2 < 0 || ePts < 1 || fPts < 1) {
+            throw new IllegalArgumentException("Invalid input parameters.");
+        }
+
+        if (points.length < 5) {
+            return false;
+        }
+
+        Point2D p1;
+        Point2D p2;
+        Point2D p3;
+        Point2D p4;
+        Point2D p5;
+        Point2D p6;
+
+        // In order to get correct steps between the points.
+        ePts++;
+        fPts++;
+
+        for (int i = 0; i < points.length - ePts - fPts; i++) {
+            p1 = points[i];
+            p2 = points[i + ePts];
+            p3 = points[i + ePts + fPts];
+
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
+                for (int j = 0; j < points.length - ePts - fPts; j++) {
+                    p4 = points[j];
+                    p5 = points[j + ePts];
+                    p6 = points[j + ePts + fPts];
+
+                    if (calculateTriangleArea(p4, p5, p6) < area2) {
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
@@ -407,6 +544,18 @@ public class Main {
                                p3.getX() * (p1.getY() - p2.getY())));
     }
 
+    private static double calculateDistanceToLine(Point2D p, Point2D start, Point2D end) {
+        double pToStart = p.distance(start);
+        double pToEnd = p.distance(end);
+        double startToEnd = start.distance(end);
+
+        // Find area using Heron's formula
+        double s = (pToStart + pToEnd + startToEnd)/2;
+        double area = Math.sqrt(s*(s-pToStart)*(s-pToEnd)*(s-startToEnd));
+
+        return (2*area)/startToEnd;
+    }
+  
     private static double calculateDistance(Point2D p1, Point2D p2) {
         return Math.sqrt(Math.pow(p1.getX()-p2.getX(),2) + Math.pow(p1.getY()-p2.getY(),2));
     }
@@ -421,7 +570,6 @@ public class Main {
         double area = Math.sqrt(s*(s-lengthA)*(s-lengthB)*(s-lengthC));
 
         return (lengthA*lengthB*lengthC)/(4*area);
-
     }
 
     private static void calcCMV() {
