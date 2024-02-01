@@ -294,17 +294,15 @@ public class MainTest {
             new Point2D.Double(2, 3)};
         
         // Positive tests
-        assertTrue(Main.lic11holds(points1, 1));
+        assertTrue(Main.lic11holds(points1, 1)); // Return true because (-1, 3) and (0, 1) satisfies the condition.
+        assertFalse(Main.lic11holds(points2, 1)); // Return false the x value of the points are increasing, does not satisfies the condition.
         
-        // Negative test
-        assertFalse(Main.lic11holds(points2, 1));
-        
-         // Params checking
+        // Negative tests
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points2, 0);
+            Main.lic11holds(points2, 0); // g_pts can't be less than 1, invalid input
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points1, 3);
+            Main.lic11holds(points1, 3); // g_pts can't be more than the number of point minus 2, invalid input
         });
     }
 
