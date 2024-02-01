@@ -268,6 +268,10 @@ public class Main {
         Point2D p5;
         Point2D p6;
 
+        // In order to get correct steps between the points.
+        ePts++;
+        fPts++;
+
         for (int i = 0; i < points.length - ePts - fPts; i++) {
             p1 = points[i];
             p2 = points[i + ePts];

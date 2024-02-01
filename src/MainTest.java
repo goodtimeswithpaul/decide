@@ -147,8 +147,8 @@ public class MainTest {
                 new Point2D.Double(0, 4),
         };
 
-        int e_pts = 2;
-        int f_pts = 3;
+        int e_pts = 1;
+        int f_pts = 2;
         double area1 = 3.9;
         double area2 = 4.1;
 
