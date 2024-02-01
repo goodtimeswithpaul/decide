@@ -384,7 +384,25 @@ public class Main {
         return false;
     }
 
-    public static boolean lic10holds(Point2D[] points, int numPoints, int ePoints, int fPoints, double area1) {
+    public static boolean lic10holds(Point2D[] points, double area1, int ePoints, int fPoints) {
+        if (points.length < 5 || ePoints < 1 || fPoints < 1 || ePoints + fPoints > points.length - 3) {
+            return false;
+        }
+
+        Point2D p1;
+        Point2D p2;
+        Point2D p3;
+        
+        for (int i = 0; i < points.length - ePoints - fPoints - 2; i++) {
+            p1 = points[i];
+            p2 = points[i + ePoints + 1];
+            p3 = points[i + ePoints + fPoints + 2];
+
+            if (calculateTriangleArea(p1, p2, p3) > area1) {
+                return true;
+            }
+        }
+
         return false;
     }
 
