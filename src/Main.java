@@ -571,24 +571,6 @@ public class Main {
         return (lengthA*lengthB*lengthC)/(4*area);
     }
 
-    public static void checkLIC() {
-        System.out.println(lic0holds(points, parameters.getLength1()));
-        System.out.println(lic1holds(points, parameters.getEpsilon()));
-        System.out.println(lic2holds(points, parameters.getEpsilon()));
-        System.out.println(lic3holds(points, parameters.getArea1()));
-        System.out.println(lic4holds(points, parameters.getQ_pts(), parameters.getQuads()));
-        System.out.println(lic5holds(points));
-        System.out.println(lic6holds(points, numPoints, parameters.getN_pts(), parameters.getDist()));
-        System.out.println(lic7holds(points, parameters.getK_pts(), parameters.getLength1()));
-        System.out.println(lic8holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1()));
-        System.out.println(lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()));
-        System.out.println(lic10holds(points, parameters.getArea1(), parameters.getE_pts(), parameters.getF_pts()));
-        System.out.println(lic11holds(points, parameters.getG_pts()));
-        System.out.println(lic12holds(points, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2()));
-        System.out.println(lic13holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2()));
-        System.out.println(lic14holds(points, parameters.getArea1(), parameters.getArea2(), parameters.getE_pts(), parameters.getF_pts()));
-    }
-
     public static boolean isIthRowAllTrue(int rowIndex, boolean[][] prelimUnlockMatrix) {
         for (int j = 0; j < VECTOR_SIZE; j++) {
             if (j != rowIndex) {
