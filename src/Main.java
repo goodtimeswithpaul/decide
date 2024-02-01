@@ -639,7 +639,5 @@ public class Main {
 
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
-        calcCMV();
-        calcPUM();
     }
 }
