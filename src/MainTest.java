@@ -71,7 +71,7 @@ public class MainTest {
     @Test
     public void testLIC2() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
-                            new Point2D.Double(0, 1),
+                            new Point2D.Double(1, 1),
                             new Point2D.Double(0, 5)};
 
         Point2D[] points2 = {new Point2D.Double(0, 0)};
@@ -82,10 +82,11 @@ public class MainTest {
                 new Point2D.Double(100, 100)};
         
         // Positive test
-        assertTrue(Main.lic2holds(points1, 3));
-
+        
+        assertTrue(Main.lic2holds(points1, 1));
         // Negative tests
         assertFalse(Main.lic2holds(points3, 2));
+        assertFalse(Main.lic2holds(points1, 2));
         assertFalse(Main.lic2holds(points1, 3.1));
 
         // Params checking
