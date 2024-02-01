@@ -641,10 +641,12 @@ public class Main {
         conditionsMetVector = getConditionsMetVector(points, p);
         prelimUnlockMatrix = getPrelimUnlockMatrix(logConMatrix, conditionsMetVector);
         finalUnlockVector = getfinalUnlockVector(prelimUnlockMatrix, prelimUnlockVector);
+
         launch = true;
-        for (int i = 0; i < VECTOR_SIZE && launch; i++) {
+        for (int i = 0; i < VECTOR_SIZE; i++) {
             if (!finalUnlockVector[i]) {
                 launch = false;
+                break;
             }
         }
 
