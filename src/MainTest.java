@@ -217,27 +217,23 @@ public class MainTest {
                 new Point2D.Double(0,10),
                 new Point2D.Double(0,0)};
 
-        // The second and the 6th point are more than 8 away
-        assertTrue(Main.lic7holds(points1, 3, 8));
-        // The first and the 6th point are more than 8 away
-        assertTrue(Main.lic7holds(points1, 4, 8));
-        // No two points should match
-        assertFalse(Main.lic7holds(points1, 3, 9));
-        assertFalse(Main.lic7holds(points1, 5, 8));
+        // Positive tests
+        assertTrue(Main.lic7holds(points1, 3, 8));  // True because the second and the 6th point are more than 8 away and have 3 points in between
+        assertTrue(Main.lic7holds(points1, 4, 8));  // True because the first and the 6th point are more than 8 away and have 4 points in between
 
-        // The function should not accept null as points
-        assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic7holds(null, 1000, 1000);
-        });
+        assertFalse(Main.lic7holds(points1, 3, 9)); // False because no two points should match, the length is too big as the largest distance is exactly 9
+        assertFalse(Main.lic7holds(points1, 5, 8)); // False because no two points should match, the kPoints is too large for point 2 and 6 to match
+        assertFalse(Main.lic7holds(points1, 7, 0)); // With kPoints = 7, it should be false, even with length1 = 0
 
-        // With kPoints = 7, it should be false, even with length1 = 0
-        assertFalse(Main.lic7holds(points1, 7, 0));
-
-        // With two points, it should return false whatever the other parameters are
         Point2D[] points2 = {new Point2D.Double(0,0), new Point2D.Double(1,0)};
+        // With two points, it should return false whatever the other parameters are
         assertFalse(Main.lic7holds(points2, 1, 0.5));
         assertFalse(Main.lic7holds(points2, 1, -6));
         assertFalse(Main.lic7holds(points2, 8, 0.5));
+
+        assertThrows(IllegalArgumentException.class, () -> { // The function should not accept null as points
+            Main.lic7holds(null, 1000, 1000);
+        });
     }
     
     @Test
