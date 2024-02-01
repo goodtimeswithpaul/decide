@@ -572,8 +572,49 @@ public class Main {
         return (lengthA*lengthB*lengthC)/(4*area);
     }
 
+    public static void checkLIC() {
+        System.out.println(lic0holds(points, parameters.getLength1()));
+        System.out.println(lic1holds(points, parameters.getEpsilon()));
+        System.out.println(lic2holds(points, parameters.getEpsilon()));
+        System.out.println(lic3holds(points, parameters.getArea1()));
+        System.out.println(lic4holds(points, parameters.getQ_pts(), parameters.getQuads()));
+        System.out.println(lic5holds(points));
+        //System.out.println(lic6holds(points, numPoints, parameters.getN_pts(), parameters.getDist()));
+        System.out.println(lic7holds(points, parameters.getK_pts(), parameters.getLength1()));
+        System.out.println(lic8holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1()));
+        //System.out.println(lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()));
+        System.out.println(lic10holds(points, parameters.getArea1(), parameters.getE_pts(), parameters.getF_pts()));
+        //System.out.println(lic11holds(points, parameters.getG_pts()));
+        System.out.println(lic12holds(points, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2()));
+        System.out.println(lic13holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2()));
+        System.out.println(lic14holds(points, parameters.getArea1(), parameters.getArea2(), parameters.getE_pts(), parameters.getF_pts()));
+    }
+
+    public static boolean getConditionsMet() {
+        boolean allTestsPassed = true;
+
+        allTestsPassed &= lic0holds(points, parameters.getLength1());
+        allTestsPassed &= lic1holds(points, parameters.getRadius1());
+        allTestsPassed &= lic2holds(points, parameters.getEpsilon());
+        allTestsPassed &= lic3holds(points, parameters.getArea1());
+        allTestsPassed &= lic4holds(points, parameters.getQ_pts(), parameters.getQuads());
+        allTestsPassed &= lic5holds(points);
+        //allTestsPassed &= lic6holds(points, numPoints, parameters.getN_pts(), parameters.getDist());
+        allTestsPassed &= lic7holds(points, parameters.getK_pts(), parameters.getLength1());
+        allTestsPassed &= lic8holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1());
+        //allTestsPassed &= lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon());
+        allTestsPassed &= lic10holds(points, parameters.getArea1(), parameters.getE_pts(), parameters.getF_pts());
+        //allTestsPassed &= lic11holds(points, parameters.getG_pts());
+        allTestsPassed &= lic12holds(points, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2());
+        allTestsPassed &= lic13holds(points, points.length, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2());
+        allTestsPassed &= lic14holds(points, parameters.getArea1(), parameters.getArea2(), parameters.getE_pts(), parameters.getF_pts());
+
+        return allTestsPassed;
+    }
+
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
-        System.out.println(lic2holds(points, parameters.getEpsilon()));
+        checkLIC();
+        System.out.println("Launch?: " + getConditionsMet());
     }
 }
