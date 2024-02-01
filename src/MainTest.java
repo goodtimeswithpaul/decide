@@ -1,4 +1,5 @@
 import org.junit.Test;
+import org.junit.Assert;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
@@ -389,5 +390,68 @@ public class MainTest {
             Main.lic14holds(points2, area1, area1 - area2, e_pts, f_pts);
         });
         assertFalse(Main.lic14holds(points3, area1, area2, e_pts, f_pts));
+    }
+
+    @Test
+    public void testisIthRowAllTrue() {
+        boolean[][] rows = {
+            {true, true, true, true, true, true, true, true, false, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+
+            {true, true, true, true, true, true, false, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, false, true, false, true, true, true, true},
+
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, false, true, true, true, true, false, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+        };
+
+        boolean[] expected = {false, true, true, true, true,     false, true, true, true, false,     true, false, true, true, true};
+        boolean[] result = new boolean[Main.VECTOR_SIZE];
+
+        for (int i = 0; i < Main.VECTOR_SIZE; i++) {
+            result[i] =  Main.isIthRowAllTrue(i, rows);
+        }
+
+        Assert.assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void tesGetfinalUnlockVector() {
+        boolean[] puv = {true, true, false, true, true,     true, true, true, false, true,     true, true, true, false, false};
+
+        boolean[][] pum = {
+                {true, false, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false, to test that if fuv[i] == false, then it is true whatever the content of the pum
+                {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false
+
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+                {false, true, true, true, true, true, true, true, true, true, true, true, true, true, true},    // Contains a false
+        };
+
+        // Computed by hand, combining the puv and the pum above
+        boolean[] expected = {false, true, true, false, true,     true, false, true, true, false,     true, true, true, true, true};
+
+        // Checks that the result of the function matches what we computed by hand
+        Assert.assertArrayEquals(expected, Main.getfinalUnlockVector(pum, puv));
     }
 }
