@@ -174,8 +174,7 @@ public class Main {
         for (int i = 1; i <(points.length - 1); i++) {
             if (!(points[i].equals(points[i-1])) && !(points[i].equals(points[i+1]))) {
                 double angle = getAngle(points[i], points[i-1], points[i+1]);
-                double angleR = Math.abs(Math.toRadians(angle));
-                if (angleR > (pi + epsilon) || angleR < (pi - epsilon)) {
+                if (angle > (pi + epsilon) || angle < (pi - epsilon)) {
                     return true;
                 }
             }
