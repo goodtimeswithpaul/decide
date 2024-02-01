@@ -167,8 +167,8 @@ public class Main {
         return false;
     }
 
-    public static boolean lic10holds(Point2D[] points, double area1, int ePts, int fPts) {
-        if (points == null || points.length < 5 || ePts < 1 || fPts < 1 || ePts + fPts > points.length - 3) {
+    public static boolean lic10holds(Point2D[] points, double area1, int ePoints, int fPoints) {
+        if (points == null || points.length < 5 || ePoints < 1 || fPoints < 1 || ePoints + fPoints > points.length - 3) {
             throw new IllegalArgumentException("Invalid input parameters.");
         }
 
@@ -176,10 +176,10 @@ public class Main {
         Point2D p2;
         Point2D p3;
         
-        for (int i = 0; i <= points.length - ePts - fPts; i++) {
+        for (int i = 0; i < points.length - ePoints - fPoints - 2; i++) {
             p1 = points[i];
-            p2 = points[i + ePts];
-            p3 = points[i + ePts + fPts];
+            p2 = points[i + ePoints + 1];
+            p3 = points[i + ePoints + fPoints + 2];
 
             if (calculateTriangleArea(p1, p2, p3) > area1) {
                 return true;
