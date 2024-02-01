@@ -126,6 +126,20 @@ public class MainTest {
         assertFalse(Main.lic7holds(points2, 1, 0.5));
         assertFalse(Main.lic7holds(points2, 1, -6));
         assertFalse(Main.lic7holds(points2, 8, 0.5));
+    }
 
+    @Test
+    public void testLIC12() {
+        Point2D[] points1 = {new Point2D.Double(0,0),
+                new Point2D.Double(0,1),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,4),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,10)};
+
+        assertTrue(Main.lic12holds(points1, 1, 5, 4));
+        assertTrue(Main.lic12holds(points1, 2, 5, 4));
+        assertTrue(Main.lic12holds(points1, 3, 5, 4));
+        assertFalse(Main.lic12holds(points1, 4, 5, 4));
     }
 }

@@ -289,7 +289,29 @@ public class Main {
         return false;
     }
 
-    public static boolean lic12holds(Point2D[] points, int numPoints, int kPoints, double length1, double length2) {
+    public static boolean lic12holds(Point2D[] points, int kPoints, double length1, double length2) {
+        if (points == null) {
+            throw new IllegalArgumentException("points must not be null.");
+        }
+
+        if (!(length2 >= 0)) {
+            throw new IllegalArgumentException("length1 and length2 must be positive.");
+        }
+
+        if (points.length < Math.max(3, (kPoints + 2))) {
+            return false;
+        }
+
+        for (int i = 0; i < points.length - kPoints - 1; i++) {
+            if (points[i].distance(points[i + kPoints + 1]) > length1) {
+                for (int j = 0; j < points.length - kPoints - 1; j++) {
+                    if (points[j].distance(points[j + kPoints + 1]) < length2) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
         return false;
     }
 
