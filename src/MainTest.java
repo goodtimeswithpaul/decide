@@ -133,20 +133,17 @@ public class MainTest {
                             new Point2D.Double(0, 1),
                             new Point2D.Double(2, 4)};
 
-        
-        // Negative test
-        assertFalse(Main.lic4holds(points1, 2, 3));
-        assertFalse(Main.lic4holds(points2, 2, 2));
-
         // Positive tests
-        assertTrue(Main.lic4holds(points1, 3, 2));
+        assertTrue(Main.lic4holds(points1, 3, 2)); // Return true because there are 3 consecutive points in more than 2 quads, 3 > 2
+        assertFalse(Main.lic4holds(points1, 2, 3)); // Return false because there are no 2 consecutive points in more than 3 quads
+        assertFalse(Main.lic4holds(points2, 2, 2)); // Return false because there are no 2 consecutive points in more than 2 quads
 
-        // Params checking
+        // Negative test
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic4holds(points2, 1, 2);
+            Main.lic4holds(points2, 1, 2); // q_pts less than 2, invalid input
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic4holds(points1, 2, 4);
+            Main.lic4holds(points1, 2, 4); // quads bigger than 3, invalid input
         });
     }
 
