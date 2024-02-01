@@ -638,5 +638,20 @@ public class Main {
 
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
+        conditionsMetVector = getConditionsMetVector(points, p);
+        prelimUnlockMatrix = getPrelimUnlockMatrix(logConMatrix, conditionsMetVector);
+        finalUnlockVector = getfinalUnlockVector(prelimUnlockMatrix, prelimUnlockVector);
+        launch = true;
+        for (int i = 0; i < VECTOR_SIZE && launch; i++) {
+            if (!finalUnlockVector[i]) {
+                launch = false;
+            }
+        }
+
+        if (launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
     }
 }
