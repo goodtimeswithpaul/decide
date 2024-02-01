@@ -278,8 +278,12 @@ public class Main {
     }
 
     public static boolean lic9holds(Point2D[] points, int cPoints, int dPoints, double epsilon) {
-        if (points.length < 5 || 1 > cPoints || 1 > dPoints || (cPoints + dPoints) > (points.length-3)) {
+        if (1 > cPoints || 1 > dPoints || (cPoints + dPoints) > (points.length-3)) {
             throw new IllegalArgumentException("At least 5 points are required, c_pts and d_pts must be eqaul to or great than zero, their sum must be equal to or smaller than the number or point minus 3");
+        }
+
+        if (points.length < 5) {
+            return false;
         }
 
         int totalset = cPoints + dPoints + 2;
