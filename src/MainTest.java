@@ -21,15 +21,13 @@ public class MainTest {
         example = 1;
     }
 
+    
+
     /**
      * Example test
      * all test should be named:
      * testSomethingThatDescribesTheTest()
      */
-    @Test
-    public void testExample() {
-        assertTrue(true);
-    }
 
     @Test
     public void testLIC0() {
@@ -126,6 +124,40 @@ public class MainTest {
         assertFalse(Main.lic7holds(points2, 1, 0.5));
         assertFalse(Main.lic7holds(points2, 1, -6));
         assertFalse(Main.lic7holds(points2, 8, 0.5));
+    }
+    
+    @Test
+    public void testLIC9() {
+        Point2D[] points1 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+            new Point2D.Double(2, 5)};
+
+        Point2D[] points2 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+            new Point2D.Double(2, 5)};
+        
+        // Positive tests
+        assertTrue(Main.lic9holds(points1, 1, 1, 0.1));
+        
+        // Negative test
+        assertFalse(Main.lic9holds(points1, 1, 1, 3));
+        
+         // Params checking
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points2, 0, 1, 0.1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points1, 1, 0, 0.1);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic9holds(points1, 1, 0, 1000);
+        });
     }
 
     @Test
