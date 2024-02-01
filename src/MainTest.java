@@ -279,10 +279,17 @@ public class MainTest {
                 new Point2D.Double(0,0),
                 new Point2D.Double(0,10)};
 
-        assertTrue(Main.lic12holds(points1, 1, 5, 4));
-        assertTrue(Main.lic12holds(points1, 2, 5, 4));
+        // Positive tests
+        assertTrue(Main.lic12holds(points1, 1, 5, 4));  // We make the parameters vary until we cannot find the two matching set of points
+        assertTrue(Main.lic12holds(points1, 2, 5, 4));  // that are respectively more than length1 away and less than length2
         assertTrue(Main.lic12holds(points1, 3, 5, 4));
         assertFalse(Main.lic12holds(points1, 4, 5, 4));
+        assertFalse(Main.lic12holds(points1, 5, 3, 10));    // Should be false if the number of points is smaller than kPoints + 2
+                                                                                  // It is the case here as we have 6 points , and 5 + 2 = 7
+        // Negative test
+        assertThrows(IllegalArgumentException.class, () -> { // length2 cannot be negative
+            Main.lic12holds(points1, 5, 3, -3);
+        });
     }
 
     @Test

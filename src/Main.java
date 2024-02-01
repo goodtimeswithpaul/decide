@@ -427,7 +427,7 @@ public class Main {
         }
 
         if (!(length2 >= 0)) {
-            throw new IllegalArgumentException("length1 and length2 must be positive.");
+            throw new IllegalArgumentException("length2 must be positive.");
         }
 
         if (points.length < Math.max(3, (kPoints + 2))) {
