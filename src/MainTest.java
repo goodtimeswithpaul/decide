@@ -67,7 +67,6 @@ public class MainTest {
         Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
         assertTrue(Main.lic1holds(testPoints,0.5));
         // Negative test
-        Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
         assertFalse(Main.lic1holds(testPoints,1));
     }
 
