@@ -69,6 +69,35 @@ public class MainTest {
     }
 
     @Test
+    public void testLIC2() {
+        Point2D[] points1 = {new Point2D.Double(0, 0),
+                            new Point2D.Double(0, 1),
+                            new Point2D.Double(0, 5)};
+
+        Point2D[] points2 = {new Point2D.Double(0, 0)};
+
+        Point2D[] points3 = {new Point2D.Double(0, 1),
+                new Point2D.Double(0, 1),
+                new Point2D.Double(0, 1),
+                new Point2D.Double(100, 100)};
+        
+        // Positive test
+        assertTrue(Main.lic2holds(points1, 3));
+
+        // Negative tests
+        assertFalse(Main.lic2holds(points3, 2));
+        assertFalse(Main.lic2holds(points1, 3.1));
+
+        // Params checking
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic2holds(points3, 1000);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic0holds(points2, 1);
+        });
+    }
+
+    @Test
     public void testLIC5() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                 new Point2D.Double(0, 1),
