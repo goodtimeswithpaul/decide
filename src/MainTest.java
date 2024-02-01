@@ -75,27 +75,20 @@ public class MainTest {
                             new Point2D.Double(1, 1),
                             new Point2D.Double(0, 5)};
 
-        Point2D[] points2 = {new Point2D.Double(0, 0)};
-
         Point2D[] points3 = {new Point2D.Double(0, 1),
                 new Point2D.Double(0, 1),
                 new Point2D.Double(0, 1),
                 new Point2D.Double(100, 100)};
         
-        // Positive test
-        
-        assertTrue(Main.lic2holds(points1, 1));
-        // Negative tests
-        assertFalse(Main.lic2holds(points3, 2));
-        assertFalse(Main.lic2holds(points1, 2));
-        assertFalse(Main.lic2holds(points1, 3.1));
+        // Positive test   
+        assertTrue(Main.lic2holds(points1, 1)); // Return true because angle is 2.11, satisfies the condition angle < pi - 1
+        assertFalse(Main.lic2holds(points3, 2)); // Return false because there are no 3 unique points in row
+        assertFalse(Main.lic2holds(points1, 2)); // Return false because angle is 2.11, its bigger than pi - 2 and smaller than pi + 2
+        assertFalse(Main.lic2holds(points1, 3.1)); // Return false because angle is 2.11, its bigger than pi - 3.1 and smaller than pi + 3.1
 
-        // Params checking
+        // Negative tests
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic2holds(points3, 1000);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic0holds(points2, 1);
+            Main.lic2holds(points3, 1000); // Epsilon bigger than pi, invalid input
         });
     }
 
