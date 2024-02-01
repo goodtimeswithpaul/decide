@@ -173,12 +173,15 @@ public class MainTest {
                 new Point2D.Double(45, 5)};
 
 
-        assertFalse(Main.lic5holds(points1));
-        assertTrue(Main.lic5holds(points2));
-        assertThrows(IllegalArgumentException.class, () -> {
+        // Positive tests
+        assertFalse(Main.lic5holds(points1)); // False because no two consecutive points have a negative x displacement
+        assertFalse(Main.lic5holds(points4)); // False because no two consecutive points have a negative x displacement
+        assertTrue(Main.lic5holds(points2));  // True because the last two points have a negative x displacement
+
+        // Negative tests
+        assertThrows(IllegalArgumentException.class, () -> { // The function should no accept less than two points
             Main.lic5holds(points3);
         });
-        assertFalse(Main.lic5holds(points4));
     }
 
     @Test
