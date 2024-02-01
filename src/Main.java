@@ -584,11 +584,11 @@ public class Main {
             lic7holds(points, parameters.getK_pts(), parameters.getLength1()),
             lic8holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1()),
             lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()),
-            lic10holds(points, numPoints, parameters.getE_pts(), parameters.getF_pts(), parameters.getArea1()),
+            lic10holds(points, parameters.getArea1(), parameters.getE_pts(), parameters.getF_pts()),
             lic11holds(points, parameters.getG_pts()),
             lic12holds(points, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2()),
             lic13holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2()),
-            lic14holds(points, numPoints, parameters.getE_pts(), parameters.getF_pts(), parameters.getArea1(), parameters.getArea2())
+            lic14holds(points, parameters.getArea1(), parameters.getArea2(), parameters.getE_pts(), parameters.getF_pts(),)
         };
     }
 
