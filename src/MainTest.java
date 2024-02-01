@@ -332,4 +332,44 @@ public class MainTest {
         // Negative Test
         assertFalse(Main.lic13holds(testPoints, 7, 2, 2,0.5, 0.5));
     }
+
+    @Test
+    public void testLIC14() {
+        Point2D[] points1 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+                new Point2D.Double(0, 3),
+                new Point2D.Double(1, 4),
+        };
+
+        Point2D[] points2 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+                new Point2D.Double(0, 3),
+                new Point2D.Double(1, 4),
+        };
+
+        Point2D[] points3 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 2),
+                new Point2D.Double(2, 0),
+                new Point2D.Double(0, 4),
+        };
+
+        int e_pts = 1;
+        int f_pts = 2;
+        double area1 = 3.9;
+        double area2 = 4.1;
+
+        assertTrue(Main.lic14holds(points1, area1, area2, e_pts, f_pts));
+        assertFalse(Main.lic14holds(points1, area1, area1, e_pts, f_pts));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic14holds(points2, area1, area1 - area2, e_pts, f_pts);
+        });
+        assertFalse(Main.lic14holds(points3, area1, area2, e_pts, f_pts));
+    }
 }
