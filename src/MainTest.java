@@ -67,7 +67,8 @@ public class MainTest {
         // Negative test
         assertFalse(Main.lic1holds(testPoints,1));
     }
-
+    
+    @Test
     public void testLIC5() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                 new Point2D.Double(0, 1),
