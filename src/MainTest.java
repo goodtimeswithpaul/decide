@@ -274,4 +274,24 @@ public class MainTest {
         // Negative Test
         assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
     }
+
+    @Test
+    public void testLIC10() {
+        Point2D[] p1 = {
+            new Point2D.Double(0, 0),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(2, 0),
+            new Point2D.Double(0, 4),
+            new Point2D.Double(0, 3),
+            new Point2D.Double(1, 4),
+        };
+
+        double area1 = 1;
+        int e_pts = 1;
+        int f_pts = 2;
+
+
+        assertTrue(Main.lic10holds(p1, area1, e_pts, f_pts));
+        assertFalse(Main.lic10holds(p1, area1 * 5, e_pts, f_pts));
+    }
 }

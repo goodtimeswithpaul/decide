@@ -349,8 +349,8 @@ public class Main {
     }
 
     public static boolean lic10holds(Point2D[] points, double area1, int ePoints, int fPoints) {
-        if (points == null || points.length < 5 || ePoints < 1 || fPoints < 1 || ePoints + fPoints > points.length - 3) {
-            throw new IllegalArgumentException("Invalid input parameters.");
+        if (points.length < 5 || ePoints < 1 || fPoints < 1 || ePoints + fPoints > points.length - 3) {
+            return false;
         }
 
         Point2D p1;
