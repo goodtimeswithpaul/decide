@@ -61,10 +61,10 @@ public class MainTest {
   
     @Test
     public void testLIC1(){
-        // Positive test
         Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
+        // Positive test, the points are not contained by the circle of the given radius
         assertTrue(Main.lic1holds(testPoints,0.5));
-        // Negative test
+        // Negative test, the points are contained by the circle of the given radius
         assertFalse(Main.lic1holds(testPoints,1));
     }
 
@@ -178,13 +178,13 @@ public class MainTest {
             new Point2D.Double(0,10),
             new Point2D.Double(0,0)};
         
-        // Positive Test
+        // Positive Test, one of the points lies a greater distance than dist from the line joining the first and last of the nPoints
         assertTrue(Main.lic6holds(points, 8, 4, 3));
         // Positve Test, for when start and end are identical
         assertTrue(Main.lic6holds(points, 8, 8, 3));
-        // Negative Test
+        // Negative Test, no point lies further from the line than 100
         assertFalse(Main.lic6holds(points, 8, 4, 100));
-        // Throws exception test
+        // Throws exception test, nPoints is larger than numPoints
         assertThrows(IllegalArgumentException.class, () -> {
             Main.lic6holds(points, 8, 9, 10);
         });
@@ -308,9 +308,9 @@ public class MainTest {
             new Point2D.Double(3,4),
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
-        // Positive Test
+        // Positive Test, there exists a set of 3 data points that cannot be contained by a circle of radius1
         assertTrue(Main.lic8holds(testPoints, 7, 2, 2,0.5));
-        // Negative Test
+        // Negative Test, there does not exists a set of 3 data points that cannot be contained by a circle of radius1
         assertFalse(Main.lic8holds(testPoints, 7, 2, 2,1));
         // Negative Test
         assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
@@ -345,9 +345,9 @@ public class MainTest {
             new Point2D.Double(3,4),
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
-        // Positive Test
+        // Positive Test, LIC8 returns true and there exists a set of 3 data points that can be contained by a circle of radius2
         assertTrue(Main.lic13holds(testPoints, 7, 2, 2,0.5, 1));
-        // Negative Test
+        // Negative Test, LIC8 returns true but there does not exist a set of 3 data points that can be contained by a circle of radius2
         assertFalse(Main.lic13holds(testPoints, 7, 2, 2,0.5, 0.5));
     }
 
