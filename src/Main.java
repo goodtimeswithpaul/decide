@@ -241,7 +241,7 @@ public class Main {
     }
 
     public static boolean lic11holds(Point2D[] points, int gPoints) {
-        if (points.length < 3 || 1 > gPoints || (points.length - 2) < gPoints) {
+        if (1 > gPoints || (points.length - 2) < gPoints) {
             throw new IllegalArgumentException("At least 3 points are required, g_pts must be equal to or smaller than the number or point minus 2\"");
         }
 
