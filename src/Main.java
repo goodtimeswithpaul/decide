@@ -12,21 +12,21 @@ public class Main {
     public enum LogicalConnectors {
         ANDD,
         ORR,
-        NOTUSED;
+        NOTUSED
     }
 
     // --- Inputs ---
     public static int numPoints;
     public static Point2D[] points;
-    public static Parameters parameters;
+    public static Parameters p;
     public static LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
     public static boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
 
     // --- Outputs ---
-    boolean launch;
-    boolean[] conditionsMetVector = new boolean[VECTOR_SIZE];
-    boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
-    boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
+    public static boolean launch;
+    public static boolean[] conditionsMetVector = new boolean[VECTOR_SIZE];
+    public static boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
+    public static boolean[] finalUnlockVector = new boolean[VECTOR_SIZE];
 
     public static void getInput(String filename) {
         BufferedReader br;
@@ -61,7 +61,7 @@ public class Main {
                 paramInts[i] = Integer.parseInt(br.readLine());
             }
 
-            parameters = new Parameters(paramDoubles, paramInts);
+            p = new Parameters(paramDoubles, paramInts);
             
             // Putting LCM values into the martix
             for (int i = 0; i < VECTOR_SIZE; i++) {
@@ -426,7 +426,7 @@ public class Main {
         }
 
         if (!(length2 >= 0)) {
-            throw new IllegalArgumentException("length2 must be positive.");
+            throw new IllegalArgumentException("length1 and length2 must be positive.");
         }
 
         if (points.length < Math.max(3, (kPoints + 2))) {
@@ -571,8 +571,89 @@ public class Main {
         return (lengthA*lengthB*lengthC)/(4*area);
     }
 
+    public static boolean isIthRowAllTrue(int rowIndex, boolean[][] prelimUnlockMatrix) {
+        for (int j = 0; j < VECTOR_SIZE; j++) {
+            if (j != rowIndex) {
+                if (!prelimUnlockMatrix[rowIndex][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean[] getConditionsMetVector(Point2D[] points, Parameters p) {
+        return new boolean[]{
+                lic0holds(points, p.getLength1()),
+                lic1holds(points, p.getRadius1()),
+                lic2holds(points, p.getEpsilon()),
+                lic3holds(points, p.getArea1()),
+                lic4holds(points, p.getQ_pts(), p.getQuads()),
+                lic5holds(points),
+                lic6holds(points, points.length, p.getN_pts(), p.getDist()),
+                lic7holds(points, p.getK_pts(), p.getLength1()),
+                lic8holds(points, points.length, p.getA_pts(), p.getB_pts(), p.getRadius1()),
+                lic9holds(points, p.getC_pts(), p.getD_pts(), p.getEpsilon()),
+                lic10holds(points, p.getArea1(), p.getE_pts(), p.getF_pts()),
+                lic11holds(points, p.getG_pts()),
+                lic12holds(points, p.getK_pts(), p.getLength1(), p.getLength2()),
+                lic13holds(points, points.length, p.getA_pts(), p.getB_pts(), p.getRadius1(), p.getRadius2()),
+                lic14holds(points, p.getArea1(), p.getArea2(), p.getE_pts(), p.getF_pts())
+        };
+    }
+
+    // Combining LCM and CMV to calculate PUM
+    // Outerloop: go through row. Innerloop: go through column.
+    private static boolean[][] getPrelimUnlockMatrix(LogicalConnectors[][] logConMatrix, boolean[] conditionsMetVector) {
+        boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
+        for (int rowId = 0; rowId < VECTOR_SIZE; rowId++) {
+            for (int colId = 0; colId < VECTOR_SIZE; colId++) {
+                if (logConMatrix[rowId][colId].equals(LogicalConnectors.ANDD)) { // If it's a AND
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] && conditionsMetVector[colId];
+                } else if (logConMatrix[rowId][colId].equals(LogicalConnectors.ORR)) { // If it's a OR
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] || conditionsMetVector[colId];
+                } else if (logConMatrix[rowId][colId].equals(LogicalConnectors.NOTUSED)) { // If it's a NOTUSED
+                    prelimUnlockMatrix[rowId][colId] = true;
+                } else {
+                    throw new IllegalArgumentException("There is something wrong in the LCM");
+                }
+            }
+        }
+
+        return prelimUnlockMatrix;
+    }
+
+    public static boolean[] getfinalUnlockVector(boolean[][] prelimUnlockMatrix, boolean[] prelimUnlockVector) {
+        boolean[] result = new boolean[VECTOR_SIZE];
+
+        // Iterating on the PUM matrix rows
+        for (int row = 0; row < VECTOR_SIZE; row++) {
+            // Thanks to lazy evaluation, isIthRowAllTrue is only called when necessary
+            result[row] = (!prelimUnlockVector[row]) || isIthRowAllTrue(row, prelimUnlockMatrix);
+        }
+
+        return result;
+    }
+
+
     public static void main(String[] args) {
         getInput("testfiles/testfile.txt");
-        System.out.println(lic2holds(points, parameters.getEpsilon()));
+        conditionsMetVector = getConditionsMetVector(points, p);
+        prelimUnlockMatrix = getPrelimUnlockMatrix(logConMatrix, conditionsMetVector);
+        finalUnlockVector = getfinalUnlockVector(prelimUnlockMatrix, prelimUnlockVector);
+
+        launch = true;
+        for (int i = 0; i < VECTOR_SIZE; i++) {
+            if (!finalUnlockVector[i]) {
+                launch = false;
+                break;
+            }
+        }
+
+        if (launch) {
+            System.out.println("YES");
+        } else {
+            System.out.println("NO");
+        }
     }
 }
