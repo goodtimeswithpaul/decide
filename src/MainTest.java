@@ -98,6 +98,24 @@ public class MainTest {
     }
 
     @Test
+    public void testLIC3() {
+        Point2D[] points1 = {
+            new Point2D.Double(0, 0),
+            new Point2D.Double(0, 2),
+            new Point2D.Double(2, 0)
+        };
+
+        double area1 = 1;
+        double area2 = 3;
+        
+        assertTrue(Main.lic3holds(points1, area1));
+        assertFalse(Main.lic3holds(points1, area2));
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic3holds(points1, -1);
+        });
+    }
+
+    @Test
     public void testLIC4() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
                             new Point2D.Double(0, -1),

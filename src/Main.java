@@ -184,7 +184,7 @@ public class Main {
     }
 
     public static boolean lic3holds(Point2D[] points, double area1) {
-        if (points == null || points.length < 3) {
+        if (points == null || points.length < 3 || area1 < 0) {
             throw new IllegalArgumentException("At least three points are required.");
         }
 
