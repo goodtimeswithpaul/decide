@@ -31,30 +31,31 @@ public class MainTest {
 
     @Test
     public void testLIC0() {
-        Point2D[] points1 = {new Point2D.Double(0, 0),
-                            new Point2D.Double(0, 1),
-                            new Point2D.Double(0, 5)};
+        Point2D[] points1 = {
+                new Point2D.Double(0, 0),
+                new Point2D.Double(0, 1),
+                new Point2D.Double(0, 5)};
 
         Point2D[] points2 = {new Point2D.Double(0, 0)};
 
-        Point2D[] points3 = {new Point2D.Double(0, 0),
+        Point2D[] points3 = {
+                new Point2D.Double(0, 0),
                 new Point2D.Double(0, 1),
                 new Point2D.Double(0, 2),
                 new Point2D.Double(0, 10),
                 new Point2D.Double(15, 1),
                 new Point2D.Double(100, 100)};
-        // Negative test
-        assertFalse(Main.lic0holds(points1, 4));
 
         // Positive tests
-        assertTrue(Main.lic0holds(points1, 3));
-        assertTrue(Main.lic0holds(points3, 60));
+        assertFalse(Main.lic0holds(points1, 4));    // False as there are no two consecutive points more than 4 away from each other (larger is exactly 4)
+        assertTrue(Main.lic0holds(points1, 3));     // True as with length 3 both pair of points in points1 could match
+        assertTrue(Main.lic0holds(points3, 60));    // True, the last two points in points3 match
 
-        // Params checking
-        assertThrows(IllegalArgumentException.class, () -> {
+        // Negative tests
+        assertThrows(IllegalArgumentException.class, () -> { // The function should not accept less than two points
             Main.lic0holds(points2, 1000);
         });
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> { // The function should not accept a negative length
             Main.lic0holds(points1, -19);
         });
     }
