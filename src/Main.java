@@ -18,7 +18,7 @@ public class Main {
     // --- Inputs ---
     public static int numPoints;
     public static Point2D[] points;
-    public static Parameters parameters;
+    public static Parameters p;
     public static LogicalConnectors[][] logConMatrix = new LogicalConnectors[VECTOR_SIZE][VECTOR_SIZE];
     public static boolean[] prelimUnlockVector = new boolean[VECTOR_SIZE];
 
@@ -61,7 +61,7 @@ public class Main {
                 paramInts[i] = Integer.parseInt(br.readLine());
             }
 
-            parameters = new Parameters(paramDoubles, paramInts);
+            p = new Parameters(paramDoubles, paramInts);
             
             // Putting LCM values into the martix
             for (int i = 0; i < VECTOR_SIZE; i++) {
@@ -583,6 +583,47 @@ public class Main {
         return true;
     }
 
+    private static boolean[] getConditionsMetVector(Point2D[] points, Parameters p) {
+        return new boolean[]{
+                lic0holds(points, p.getLength1()),
+                lic1holds(points, p.getRadius1()),
+                lic2holds(points, p.getEpsilon()),
+                lic3holds(points, p.getArea1()),
+                lic4holds(points, p.getQ_pts(), p.getQuads()),
+                lic5holds(points),
+                lic6holds(points, points.length, p.getN_pts(), p.getDist()),
+                lic7holds(points, p.getK_pts(), p.getLength1()),
+                lic8holds(points, points.length, p.getA_pts(), p.getB_pts(), p.getRadius1()),
+                lic9holds(points, p.getC_pts(), p.getD_pts(), p.getEpsilon()),
+                lic10holds(points, p.getArea1(), p.getE_pts(), p.getF_pts()),
+                lic11holds(points, p.getG_pts()),
+                lic12holds(points, p.getK_pts(), p.getLength1(), p.getLength2()),
+                lic13holds(points, points.length, p.getA_pts(), p.getB_pts(), p.getRadius1(), p.getRadius2()),
+                lic14holds(points, p.getArea1(), p.getArea2(), p.getE_pts(), p.getF_pts())
+        };
+    }
+
+    // Combining LCM and CMV to calculate PUM
+    // Outerloop: go through row. Innerloop: go through column.
+    private static boolean[][] getPrelimUnlockMatrix(LogicalConnectors[][] logConMatrix, boolean[] conditionsMetVector) {
+        boolean[][] prelimUnlockMatrix = new boolean[VECTOR_SIZE][VECTOR_SIZE];
+        for (int rowId = 0; rowId < VECTOR_SIZE; rowId++) {
+            for (int colId = 0; colId < VECTOR_SIZE; colId++) {
+                if (logConMatrix[rowId][colId].equals(LogicalConnectors.ANDD)) { // If it's a AND
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] && conditionsMetVector[colId];
+                } else if (logConMatrix[rowId][colId].equals(LogicalConnectors.ORR)) { // If it's a OR
+                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] || conditionsMetVector[colId];
+                } else if (logConMatrix[rowId][colId].equals(LogicalConnectors.NOTUSED)) { // If it's a NOTUSED
+                    prelimUnlockMatrix[rowId][colId] = true;
+                } else {
+                    throw new IllegalArgumentException("There is something wrong in the LCM");
+                }
+            }
+        }
+
+        return prelimUnlockMatrix;
+    }
+
     public static boolean[] getfinalUnlockVector(boolean[][] prelimUnlockMatrix, boolean[] prelimUnlockVector) {
         boolean[] result = new boolean[VECTOR_SIZE];
 
@@ -593,44 +634,6 @@ public class Main {
         }
 
         return result;
-    }
-
-    private static void calcCMV() {
-        conditionsMetVector = new boolean[] {
-                lic0holds(points, parameters.getLength1()),
-                lic1holds(points, parameters.getRadius1()),
-                lic2holds(points, parameters.getEpsilon()),
-                lic3holds(points, parameters.getArea1()),
-                lic4holds(points, parameters.getQ_pts(), parameters.getQuads()),
-                lic5holds(points),
-                lic6holds(points, numPoints, parameters.getN_pts(), parameters.getDist()),
-                lic7holds(points, parameters.getK_pts(), parameters.getLength1()),
-                lic8holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1()),
-                lic9holds(points, parameters.getC_pts(), parameters.getD_pts(), parameters.getEpsilon()),
-                lic10holds(points, parameters.getArea1(), parameters.getE_pts(), parameters.getF_pts()),
-                lic11holds(points, parameters.getG_pts()),
-                lic12holds(points, parameters.getK_pts(), parameters.getLength1(), parameters.getLength2()),
-                lic13holds(points, numPoints, parameters.getA_pts(), parameters.getB_pts(), parameters.getRadius1(), parameters.getRadius2()),
-                lic14holds(points, parameters.getArea1(), parameters.getArea2(), parameters.getE_pts(), parameters.getF_pts())
-        };
-    }
-
-    // Combining LCM and CMV to calculate PUM
-    // Outerloop: go through row. Innerloop: go through column.
-    private static void calcPUM() {
-        for (int rowId = 0; rowId < VECTOR_SIZE; rowId++) {
-            for (int colId = 0; colId < VECTOR_SIZE; colId++) {
-                if (logConMatrix[rowId][colId].equals(LogicalConnectors.ANDD)) { // If it's a AND
-                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] && conditionsMetVector[colId];
-                }else if (logConMatrix[rowId][colId].equals(LogicalConnectors.ORR)) { // If it's a OR
-                    prelimUnlockMatrix[rowId][colId] = conditionsMetVector[rowId] || conditionsMetVector[colId];
-                }else if (logConMatrix[rowId][colId].equals(LogicalConnectors.NOTUSED)) { // If it's a NOTUSED
-                    prelimUnlockMatrix[rowId][colId] = true;
-                }else {
-                    throw new IllegalArgumentException("There is something wrong in the LCM");
-                }
-            }
-        }
     }
 
 
