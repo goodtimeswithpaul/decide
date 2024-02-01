@@ -279,6 +279,50 @@ public class Main {
     }
 
     public static boolean lic8holds(Point2D[] points, int numPoints, int aPoints, int bPoints, double radius1) {
+
+        if(numPoints < 5 || 1 > aPoints || 1 > bPoints || aPoints + bPoints > numPoints-3){
+            return false;
+        }
+        Point2D p1, p2, p3;
+        double[] angles = new double[3];
+        for (int i = 0; i < points.length-(2+aPoints+bPoints); i++) {
+
+            p1 = points[i];
+            p2 = points[i + aPoints + 1];
+            p3 = points[i + aPoints + bPoints +2];
+
+            angles[0] = getAngle(p1, p2, p3);
+            angles[1] = getAngle(p2, p1, p3);
+            angles[2] = getAngle(p3, p2, p1);
+
+            for (int j = 0; j < 3; j++) {
+                if (angles[j] > pi) {
+                    angles[j] = 2*pi - angles[j];
+                }
+
+                if (angles[j] > pi/2) {
+
+                    if(j==0){ // Angle when p1 is vertex
+                        if (calculateDistance(p2, p3)/2 > radius1) {
+                            return true;
+                         }
+                    } else if(j==1){ //Angle when p2 is vertex
+                        if (calculateDistance(p1, p3)/2 > radius1) {
+                            return true;
+                        }
+                    } else { // Angle when p3 is vertex
+                        if (calculateDistance(p1, p2)/2 > radius1){
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            if (getCircumradius(p1, p2, p3) > radius1) {
+                return true;
+            }
+
+        }
         return false;
     }
 
