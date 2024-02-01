@@ -62,10 +62,14 @@ public class MainTest {
     @Test
     public void testLIC1(){
         // Positive test
-        Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
-        assertTrue(Main.lic1holds(testPoints,0.5));
+        Point2D[] points = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
+        assertTrue(Main.lic1holds(points,0.5));
         // Negative test
-        assertFalse(Main.lic1holds(testPoints,1));
+        assertFalse(Main.lic1holds(points,1));
+        // Params check
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic2holds(points, -1);
+        });
     }
 
     @Test
@@ -222,7 +226,32 @@ public class MainTest {
         assertFalse(Main.lic7holds(points2, 1, -6));
         assertFalse(Main.lic7holds(points2, 8, 0.5));
     }
-    
+
+    @Test
+    public void testLIC8() {
+        Point2D[] points = {new Point2D.Double(0,1),
+            new Point2D.Double(5,5),
+            new Point2D.Double(6,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(3,4),
+            new Point2D.Double(8,1),
+            new Point2D.Double(1,1)};
+        // Positive Test
+        assertTrue(Main.lic8holds(points, 7, 2, 2,0.5));
+        // Negative Test
+        assertFalse(Main.lic8holds(points, 7, 2, 2,1));
+        // Params Check
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 7, 0, 2, 0.5);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 7, 2, 0, 0.5);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 5, 2, 2, 0.5);
+        });
+    }
+
     @Test
     public void testLIC9() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
@@ -300,23 +329,6 @@ public class MainTest {
     }
 
     @Test
-    public void testLIC8() {
-        Point2D[] testPoints = {new Point2D.Double(0,1),
-            new Point2D.Double(5,5),
-            new Point2D.Double(6,1),
-            new Point2D.Double(1,0),
-            new Point2D.Double(3,4),
-            new Point2D.Double(8,1),
-            new Point2D.Double(1,1)};
-        // Positive Test
-        assertTrue(Main.lic8holds(testPoints, 7, 2, 2,0.5));
-        // Negative Test
-        assertFalse(Main.lic8holds(testPoints, 7, 2, 2,1));
-        // Negative Test
-        assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
-    }
-
-    @Test
     public void testLIC10() {
         Point2D[] p1 = {
             new Point2D.Double(0, 0),
@@ -338,7 +350,7 @@ public class MainTest {
   
     @Test
     public void testLIC13() {
-        Point2D[] testPoints = {new Point2D.Double(0,1),
+        Point2D[] points = {new Point2D.Double(0,1),
             new Point2D.Double(5,5),
             new Point2D.Double(6,1),
             new Point2D.Double(1,0),
@@ -346,9 +358,13 @@ public class MainTest {
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
         // Positive Test
-        assertTrue(Main.lic13holds(testPoints, 7, 2, 2,0.5, 1));
+        assertTrue(Main.lic13holds(points, 7, 2, 2,0.5, 1));
         // Negative Test
-        assertFalse(Main.lic13holds(testPoints, 7, 2, 2,0.5, 0.5));
+        assertFalse(Main.lic13holds(points, 7, 2, 2,0.5, 0.5));
+        // Params Check
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic13holds(points, 7, 2, 2, 0.5, -1);
+        });
     }
 
     @Test

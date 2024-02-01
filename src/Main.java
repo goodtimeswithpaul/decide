@@ -118,38 +118,38 @@ public class Main {
 
     public static boolean lic1holds(Point2D[] points, double radius1) {
 
-        if(radius1 < 0){
-            return false;
+        if (radius1 < 0) {
+            throw new IllegalArgumentException("Radius1 must be at least 0.");
         }
         Point2D p1, p2, p3;
         double[] angles = new double[3];
-        for (int i = 0; i < points.length-2; i++) {
+        for (int i = 0; i < points.length - 2; i++) {
 
             p1 = points[i];
-            p2 = points[i+1];
-            p3 = points[i+2];
+            p2 = points[i + 1];
+            p3 = points[i + 2];
 
             angles[0] = getAngle(p1, p2, p3);
             angles[1] = getAngle(p2, p1, p3);
             angles[2] = getAngle(p3, p2, p1);
-            
+
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > pi) {
-                    angles[j] = 2*pi - angles[j];
+                    angles[j] = 2 * pi - angles[j];
                 }
 
-                if (angles[j] > pi/2) {
-                    
-                    if(j==0){ // Angle when p1 is vertex
-                        if (calculateDistance(p2, p3)/2 > radius1) {
+                if (angles[j] > pi / 2) {
+
+                    if (j == 0) { // Angle when p1 is vertex
+                        if (p2.distance(p3) / 2 > radius1) {
                             return true;
-                         }
-                    } else if(j==1){ //Angle when p2 is vertex
-                        if (calculateDistance(p1, p3)/2 > radius1) {
+                        }
+                    } else if (j == 1) { // Angle when p2 is vertex
+                        if (p1.distance(p3) / 2 > radius1) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (calculateDistance(p1, p2)/2 > radius1){
+                        if (p1.distance(p2) / 2 > radius1) {
                             return true;
                         }
                     }
@@ -159,7 +159,7 @@ public class Main {
             if (getCircumradius(p1, p2, p3) > radius1) {
                 return true;
             }
-            
+
         }
         return false;
     }
@@ -316,16 +316,28 @@ public class Main {
 
     public static boolean lic8holds(Point2D[] points, int numPoints, int aPoints, int bPoints, double radius1) {
 
-        if(numPoints < 5 || 1 > aPoints || 1 > bPoints || aPoints + bPoints > numPoints-3){
+        if (1 > aPoints) {
+            throw new IllegalArgumentException("aPoints must be at least 1.");
+        }
+
+        if (1 > bPoints) {
+            throw new IllegalArgumentException("bPoints must be at least 1.");
+        }
+
+        if (aPoints + bPoints > numPoints - 3) {
+            throw new IllegalArgumentException("Sum of aPoints and bPoints must be smaller than numPoints - 3.");
+        }
+
+        if (numPoints < 5) {
             return false;
         }
         Point2D p1, p2, p3;
         double[] angles = new double[3];
-        for (int i = 0; i < points.length-(2+aPoints+bPoints); i++) {
+        for (int i = 0; i < points.length - (2 + aPoints + bPoints); i++) {
 
             p1 = points[i];
             p2 = points[i + aPoints + 1];
-            p3 = points[i + aPoints + bPoints +2];
+            p3 = points[i + aPoints + bPoints + 2];
 
             angles[0] = getAngle(p1, p2, p3);
             angles[1] = getAngle(p2, p1, p3);
@@ -333,21 +345,21 @@ public class Main {
 
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > pi) {
-                    angles[j] = 2*pi - angles[j];
+                    angles[j] = 2 * pi - angles[j];
                 }
 
-                if (angles[j] > pi/2) {
+                if (angles[j] > pi / 2) {
 
-                    if(j==0){ // Angle when p1 is vertex
-                        if (calculateDistance(p2, p3)/2 > radius1) {
+                    if (j == 0) { // Angle when p1 is vertex
+                        if (p2.distance(p3) / 2 > radius1) {
                             return true;
-                         }
-                    } else if(j==1){ //Angle when p2 is vertex
-                        if (calculateDistance(p1, p3)/2 > radius1) {
+                        }
+                    } else if (j == 1) { // Angle when p2 is vertex
+                        if (p1.distance(p3) / 2 > radius1) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (calculateDistance(p1, p2)/2 > radius1){
+                        if (p1.distance(p2) / 2 > radius1) {
                             return true;
                         }
                     }
@@ -447,20 +459,21 @@ public class Main {
         return false;
     }
 
-    public static boolean lic13holds(Point2D[] points, int numPoints, int aPoints, int bPoints, double radius1, double radius2) {
-        if(!lic8holds(points, numPoints, aPoints, bPoints, radius1)){
+    public static boolean lic13holds(Point2D[] points, int numPoints, int aPoints, int bPoints, double radius1,
+            double radius2) {
+        if (!lic8holds(points, numPoints, aPoints, bPoints, radius1)) {
             return false;
         }
-        if(radius2 < 0){
-            return false;
+        if (radius2 < 0) {
+            throw new IllegalArgumentException("Radius2 must be at least 0.");
         }
         Point2D p1, p2, p3;
         double[] angles = new double[3];
-        for (int i = 0; i < points.length-(2+aPoints+bPoints); i++) {
+        for (int i = 0; i < points.length - (2 + aPoints + bPoints); i++) {
 
             p1 = points[i];
             p2 = points[i + aPoints + 1];
-            p3 = points[i + aPoints + bPoints +2];
+            p3 = points[i + aPoints + bPoints + 2];
 
             angles[0] = getAngle(p1, p2, p3);
             angles[1] = getAngle(p2, p1, p3);
@@ -468,21 +481,21 @@ public class Main {
 
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > pi) {
-                    angles[j] = 2*pi - angles[j];
+                    angles[j] = 2 * pi - angles[j];
                 }
 
-                if (angles[j] > pi/2) {
+                if (angles[j] > pi / 2) {
 
-                    if(j==0){ // Angle when p1 is vertex
-                        if (calculateDistance(p2, p3)/2 <= radius2) {
+                    if (j == 0) { // Angle when p1 is vertex
+                        if (p2.distance(p3) / 2 <= radius2) {
                             return true;
-                         }
-                    } else if(j==1){ //Angle when p2 is vertex
-                        if (calculateDistance(p1, p3)/2 <= radius2) {
+                        }
+                    } else if (j == 1) { // Angle when p2 is vertex
+                        if (p1.distance(p3) / 2 <= radius2) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (calculateDistance(p1, p2)/2 <= radius2){
+                        if (p1.distance(p2) / 2 <= radius2) {
                             return true;
                         }
                     }
@@ -550,26 +563,22 @@ public class Main {
         double startToEnd = start.distance(end);
 
         // Find area using Heron's formula
-        double s = (pToStart + pToEnd + startToEnd)/2;
-        double area = Math.sqrt(s*(s-pToStart)*(s-pToEnd)*(s-startToEnd));
+        double s = (pToStart + pToEnd + startToEnd) / 2;
+        double area = Math.sqrt(s * (s - pToStart) * (s - pToEnd) * (s - startToEnd));
 
-        return (2*area)/startToEnd;
-    }
-  
-    private static double calculateDistance(Point2D p1, Point2D p2) {
-        return Math.sqrt(Math.pow(p1.getX()-p2.getX(),2) + Math.pow(p1.getY()-p2.getY(),2));
+        return (2 * area) / startToEnd;
     }
 
     private static double getCircumradius(Point2D p1, Point2D p2, Point2D p3) {
-        double lengthA = calculateDistance(p1,p2);
-        double lengthB = calculateDistance(p1,p3);
-        double lengthC = calculateDistance(p2,p3);
+        double lengthA = p1.distance(p2);
+        double lengthB = p1.distance(p3);
+        double lengthC = p2.distance(p3);
 
         // Find area using Heron's formula
-        double s = (lengthA + lengthB + lengthC)/2;
-        double area = Math.sqrt(s*(s-lengthA)*(s-lengthB)*(s-lengthC));
+        double s = (lengthA + lengthB + lengthC) / 2;
+        double area = Math.sqrt(s * (s - lengthA) * (s - lengthB) * (s - lengthC));
 
-        return (lengthA*lengthB*lengthC)/(4*area);
+        return (lengthA * lengthB * lengthC) / (4 * area);
     }
 
     public static void main(String[] args) {
