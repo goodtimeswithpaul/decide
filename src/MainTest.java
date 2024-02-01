@@ -99,6 +99,19 @@ public class MainTest {
 
     @Test
     public void testLIC3() {
+        /*
+         * This test builts up a triangle with the points (0,0), (0,2), (2,0) and
+         * results in an area of 2.
+          
+         * The first test checks if the area is less than the given area, which it is, so the
+         * test should return true.
+         
+         * The second test also checks if the area is less than the given area, which it is
+         * not, so the test should return false.
+         
+         * The last test also checks if the given area is negative, which it is, so the test
+         * should throw an IllegalArgumentException.
+         */
         Point2D[] points1 = {
             new Point2D.Double(0, 0),
             new Point2D.Double(0, 2),
@@ -318,6 +331,16 @@ public class MainTest {
 
     @Test
     public void testLIC10() {
+        /*
+         * This test sets up 6 points and also sets the area1 of and the set steps between the points
+         * in variables e_pts and f_pts.
+         * 
+         * First test checks when the area provided by the points given e_pts and f_pts is greater than
+         * area1, which it is, so the test should return true.
+         * 
+         * The second test is almost the same as the first one, but the area1 is greater than the area
+         * created by the points, so the test should return false. 
+         */
         Point2D[] p1 = {
             new Point2D.Double(0, 0),
             new Point2D.Double(0, 2),
@@ -353,16 +376,17 @@ public class MainTest {
 
     @Test
     public void testLIC14() {
+        /*
+         * This test sets up 2 different sets of points and also sets the area1 and area2 of and the set steps
+         * between the points with e_pts and f_pts.
+         * The different test then check if the area given by the points is greater than area1 and less than
+         * area2, which it is, so the test should return true.
+         * 
+         * Test 2 checks if the area given it return false if the above requirement is not fulfilled.
+         * Test 3 checks if we handle when area is less than 0.
+         * Test 4 checks if we handle when the number of points is less than 5.
+         */
         Point2D[] points1 = {
-                new Point2D.Double(0, 0),
-                new Point2D.Double(0, 2),
-                new Point2D.Double(2, 0),
-                new Point2D.Double(0, 4),
-                new Point2D.Double(0, 3),
-                new Point2D.Double(1, 4),
-        };
-
-        Point2D[] points2 = {
                 new Point2D.Double(0, 0),
                 new Point2D.Double(0, 2),
                 new Point2D.Double(2, 0),
@@ -386,7 +410,7 @@ public class MainTest {
         assertTrue(Main.lic14holds(points1, area1, area2, e_pts, f_pts));
         assertFalse(Main.lic14holds(points1, area1, area1, e_pts, f_pts));
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic14holds(points2, area1, area1 - area2, e_pts, f_pts);
+            Main.lic14holds(points1, area1, area1 - area2, e_pts, f_pts);
         });
         assertFalse(Main.lic14holds(points3, area1, area2, e_pts, f_pts));
     }
