@@ -2,6 +2,7 @@ import java.awt.geom.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
     final static int VECTOR_SIZE = 15;
@@ -71,6 +72,7 @@ public class Main {
             }
         } catch(IOException e) {
             System.out.println(e);
+            System.exit(-1);
         }
     }
 
@@ -138,9 +140,9 @@ public class Main {
         return result;
     }
 
-
-    public static void main(String[] args) {
-        getInput("testfiles/testfile.txt");
+    private static String test(String testFilePath){
+        String result;
+        getInput(testFilePath);
         conditionsMetVector = getConditionsMetVector(points, p);
         prelimUnlockMatrix = getPrelimUnlockMatrix(logConMatrix, conditionsMetVector);
         finalUnlockVector = getfinalUnlockVector(prelimUnlockMatrix, prelimUnlockVector);
@@ -154,9 +156,15 @@ public class Main {
         }
 
         if (launch) {
-            System.out.println("YES");
+            result = "YES";
         } else {
-            System.out.println("NO");
+            result = "NO";
         }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        
     }
 }
