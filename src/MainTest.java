@@ -20,8 +20,6 @@ public class MainTest {
         example = 1;
     }
 
-    
-
     /**
      * Example test
      * all test should be named:
@@ -46,16 +44,16 @@ public class MainTest {
                 new Point2D.Double(100, 100)};
 
         // Positive tests
-        assertFalse(Main.lic0holds(points1, 4));    // False as there are no two consecutive points more than 4 away from each other (larger is exactly 4)
-        assertTrue(Main.lic0holds(points1, 3));     // True as with length 3 both pair of points in points1 could match
-        assertTrue(Main.lic0holds(points3, 60));    // True, the last two points in points3 match
+        assertFalse(LICs.lic0holds(points1, 4));    // False as there are no two consecutive points more than 4 away from each other (larger is exactly 4)
+        assertTrue(LICs.lic0holds(points1, 3));     // True as with length 3 both pair of points in points1 could match
+        assertTrue(LICs.lic0holds(points3, 60));    // True, the last two points in points3 match
 
         // Negative tests
         assertThrows(IllegalArgumentException.class, () -> { // The function should not accept less than two points
-            Main.lic0holds(points2, 1000);
+            LICs.lic0holds(points2, 1000);
         });
         assertThrows(IllegalArgumentException.class, () -> { // The function should not accept a negative length
-            Main.lic0holds(points1, -19);
+            LICs.lic0holds(points1, -19);
         });
     }
   
@@ -63,12 +61,12 @@ public class MainTest {
     public void testLIC1(){
         // Positive test, the points are not contained by the circle of the given radius
         Point2D[] points = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
-        assertTrue(Main.lic1holds(points,0.5));
+        assertTrue(LICs.lic1holds(points,0.5));
         // Negative test, the points are contained by the circle of the given radius
-        assertFalse(Main.lic1holds(points,1));
+        assertFalse(LICs.lic1holds(points,1));
         // Params check, radius1 < 0
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic2holds(points, -1);
+            LICs.lic2holds(points, -1);
         });
     }
 
@@ -84,14 +82,14 @@ public class MainTest {
                 new Point2D.Double(100, 100)};
         
         // Positive test   
-        assertTrue(Main.lic2holds(points1, 1)); // Return true because angle is 2.11, satisfies the condition angle < pi - 1
-        assertFalse(Main.lic2holds(points3, 2)); // Return false because there are no 3 unique points in row
-        assertFalse(Main.lic2holds(points1, 2)); // Return false because angle is 2.11, its bigger than pi - 2 and smaller than pi + 2
-        assertFalse(Main.lic2holds(points1, 3.1)); // Return false because angle is 2.11, its bigger than pi - 3.1 and smaller than pi + 3.1
+        assertTrue(LICs.lic2holds(points1, 1)); // Return true because angle is 2.11, satisfies the condition angle < pi - 1
+        assertFalse(LICs.lic2holds(points3, 2)); // Return false because there are no 3 unique points in row
+        assertFalse(LICs.lic2holds(points1, 2)); // Return false because angle is 2.11, its bigger than pi - 2 and smaller than pi + 2
+        assertFalse(LICs.lic2holds(points1, 3.1)); // Return false because angle is 2.11, its bigger than pi - 3.1 and smaller than pi + 3.1
 
         // Negative tests
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic2holds(points3, 1000); // Epsilon bigger than pi, invalid input
+            LICs.lic2holds(points3, 1000); // Epsilon bigger than pi, invalid input
         });
     }
 
@@ -119,10 +117,10 @@ public class MainTest {
         double area1 = 1;
         double area2 = 3;
         
-        assertTrue(Main.lic3holds(points1, area1));
-        assertFalse(Main.lic3holds(points1, area2));
+        assertTrue(LICs.lic3holds(points1, area1));
+        assertFalse(LICs.lic3holds(points1, area2));
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic3holds(points1, -1);
+            LICs.lic3holds(points1, -1);
         });
     }
 
@@ -137,16 +135,16 @@ public class MainTest {
                             new Point2D.Double(2, 4)};
 
         // Positive tests
-        assertTrue(Main.lic4holds(points1, 3, 2)); // Return true because there are 3 consecutive points in more than 2 quads, 3 > 2
-        assertFalse(Main.lic4holds(points1, 2, 3)); // Return false because there are no 2 consecutive points in more than 3 quads
-        assertFalse(Main.lic4holds(points2, 2, 2)); // Return false because there are no 2 consecutive points in more than 2 quads
+        assertTrue(LICs.lic4holds(points1, 3, 2)); // Return true because there are 3 consecutive points in more than 2 quads, 3 > 2
+        assertFalse(LICs.lic4holds(points1, 2, 3)); // Return false because there are no 2 consecutive points in more than 3 quads
+        assertFalse(LICs.lic4holds(points2, 2, 2)); // Return false because there are no 2 consecutive points in more than 2 quads
 
         // Negative test
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic4holds(points2, 1, 2); // q_pts less than 2, invalid input
+            LICs.lic4holds(points2, 1, 2); // q_pts less than 2, invalid input
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic4holds(points1, 2, 4); // quads bigger than 3, invalid input
+            LICs.lic4holds(points1, 2, 4); // quads bigger than 3, invalid input
         });
     }
 
@@ -168,13 +166,13 @@ public class MainTest {
 
 
         // Positive tests
-        assertFalse(Main.lic5holds(points1)); // False because no two consecutive points have a negative x displacement
-        assertFalse(Main.lic5holds(points4)); // False because no two consecutive points have a negative x displacement
-        assertTrue(Main.lic5holds(points2));  // True because the last two points have a negative x displacement
+        assertFalse(LICs.lic5holds(points1)); // False because no two consecutive points have a negative x displacement
+        assertFalse(LICs.lic5holds(points4)); // False because no two consecutive points have a negative x displacement
+        assertTrue(LICs.lic5holds(points2));  // True because the last two points have a negative x displacement
 
         // Negative tests
         assertThrows(IllegalArgumentException.class, () -> { // The function should no accept less than two points
-            Main.lic5holds(points3);
+            LICs.lic5holds(points3);
         });
     }
 
@@ -190,14 +188,14 @@ public class MainTest {
             new Point2D.Double(0,0)};
         
         // Positive Test, one of the points lies a greater distance than dist from the line joining the first and last of the nPoints
-        assertTrue(Main.lic6holds(points, 8, 4, 3));
+        assertTrue(LICs.lic6holds(points, 8, 4, 3));
         // Positve Test, for when start and end are identical
-        assertTrue(Main.lic6holds(points, 8, 8, 3));
+        assertTrue(LICs.lic6holds(points, 8, 8, 3));
         // Negative Test, no point lies further from the line than 100
-        assertFalse(Main.lic6holds(points, 8, 4, 100));
+        assertFalse(LICs.lic6holds(points, 8, 4, 100));
         // Throws exception test, nPoints is larger than numPoints
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic6holds(points, 8, 9, 10);
+            LICs.lic6holds(points, 8, 9, 10);
         });
     }
 
@@ -212,21 +210,21 @@ public class MainTest {
                 new Point2D.Double(0,0)};
 
         // Positive tests
-        assertTrue(Main.lic7holds(points1, 3, 8));  // True because the second and the 6th point are more than 8 away and have 3 points in between
-        assertTrue(Main.lic7holds(points1, 4, 8));  // True because the first and the 6th point are more than 8 away and have 4 points in between
+        assertTrue(LICs.lic7holds(points1, 3, 8));  // True because the second and the 6th point are more than 8 away and have 3 points in between
+        assertTrue(LICs.lic7holds(points1, 4, 8));  // True because the first and the 6th point are more than 8 away and have 4 points in between
 
-        assertFalse(Main.lic7holds(points1, 3, 9)); // False because no two points should match, the length is too big as the largest distance is exactly 9
-        assertFalse(Main.lic7holds(points1, 5, 8)); // False because no two points should match, the kPoints is too large for point 2 and 6 to match
-        assertFalse(Main.lic7holds(points1, 7, 0)); // With kPoints = 7, it should be false, even with length1 = 0
+        assertFalse(LICs.lic7holds(points1, 3, 9)); // False because no two points should match, the length is too big as the largest distance is exactly 9
+        assertFalse(LICs.lic7holds(points1, 5, 8)); // False because no two points should match, the kPoints is too large for point 2 and 6 to match
+        assertFalse(LICs.lic7holds(points1, 7, 0)); // With kPoints = 7, it should be false, even with length1 = 0
 
         Point2D[] points2 = {new Point2D.Double(0,0), new Point2D.Double(1,0)};
         // With two points, it should return false whatever the other parameters are
-        assertFalse(Main.lic7holds(points2, 1, 0.5));
-        assertFalse(Main.lic7holds(points2, 1, -6));
-        assertFalse(Main.lic7holds(points2, 8, 0.5));
+        assertFalse(LICs.lic7holds(points2, 1, 0.5));
+        assertFalse(LICs.lic7holds(points2, 1, -6));
+        assertFalse(LICs.lic7holds(points2, 8, 0.5));
 
         assertThrows(IllegalArgumentException.class, () -> { // The function should not accept null as points
-            Main.lic7holds(null, 1000, 1000);
+            LICs.lic7holds(null, 1000, 1000);
         });
     }
 
@@ -240,20 +238,20 @@ public class MainTest {
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
         // Positive Test, there exists a set of 3 data points that cannot be contained by a circle of radius1
-        assertTrue(Main.lic8holds(points, 7, 2, 2,0.5));
+        assertTrue(LICs.lic8holds(points, 7, 2, 2,0.5));
         // Negative Test, there does not exists a set of 3 data points that cannot be contained by a circle of radius1
-        assertFalse(Main.lic8holds(points, 7, 2, 2,1));
+        assertFalse(LICs.lic8holds(points, 7, 2, 2,1));
         // Params Check, aPoints smaller than 1, throws exception
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic8holds(points, 7, 0, 2, 0.5);
+            LICs.lic8holds(points, 7, 0, 2, 0.5);
         });
         // Params Check, bPoints smaller than 1, throws exception
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic8holds(points, 7, 2, 0, 0.5);
+            LICs.lic8holds(points, 7, 2, 0, 0.5);
         });
         // Params Check, aPoints + bPoints > numPoints - 3, throws exception
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic8holds(points, 5, 2, 2, 0.5);
+            LICs.lic8holds(points, 5, 2, 2, 0.5);
         });
     }
 
@@ -275,18 +273,18 @@ public class MainTest {
             new Point2D.Double(2, 5)};
         
         // Positive tests
-        assertTrue(Main.lic9holds(points1, 1, 1, 0.1)); // Return true because for points (0,0),(0,2),(1,4) the angle is 2.68, satisfies the condition angle < pi - 0.1
-        assertFalse(Main.lic9holds(points1, 1, 1, 3)); // Return false because there both 2.68 and angle 2.36 build by(0,1),(0,3),(2,5) does not satisfy the conditions
+        assertTrue(LICs.lic9holds(points1, 1, 1, 0.1)); // Return true because for points (0,0),(0,2),(1,4) the angle is 2.68, satisfies the condition angle < pi - 0.1
+        assertFalse(LICs.lic9holds(points1, 1, 1, 3)); // Return false because there both 2.68 and angle 2.36 build by(0,1),(0,3),(2,5) does not satisfy the conditions
         
         // Negative test
         assertThrows(IllegalArgumentException.class, () -> { // c_pts < 1, invalid input 
-            Main.lic9holds(points2, 0, 1, 0.1);
+            LICs.lic9holds(points2, 0, 1, 0.1);
         });
         assertThrows(IllegalArgumentException.class, () -> { // d_pts < 1, invalid input 
-            Main.lic9holds(points1, 1, 0, 0.1);
+            LICs.lic9holds(points1, 1, 0, 0.1);
         });
         assertThrows(IllegalArgumentException.class, () -> { // episilon > pi, invalid input 
-            Main.lic9holds(points1, 1, 0, 1000);
+            LICs.lic9holds(points1, 1, 0, 1000);
         });
     }
 
@@ -316,8 +314,8 @@ public class MainTest {
         int f_pts = 2;
 
 
-        assertTrue(Main.lic10holds(p1, area1, e_pts, f_pts));
-        assertFalse(Main.lic10holds(p1, area1 * 5, e_pts, f_pts));
+        assertTrue(LICs.lic10holds(p1, area1, e_pts, f_pts));
+        assertFalse(LICs.lic10holds(p1, area1 * 5, e_pts, f_pts));
     }
 
     @Test
@@ -333,15 +331,15 @@ public class MainTest {
             new Point2D.Double(2, 3)};
         
         // Positive tests
-        assertTrue(Main.lic11holds(points1, 1)); // Return true because (-1, 3) and (0, 1) satisfies the condition.
-        assertFalse(Main.lic11holds(points2, 1)); // Return false the x value of the points are increasing, does not satisfies the condition.
+        assertTrue(LICs.lic11holds(points1, 1)); // Return true because (-1, 3) and (0, 1) satisfies the condition.
+        assertFalse(LICs.lic11holds(points2, 1)); // Return false the x value of the points are increasing, does not satisfies the condition.
         
         // Negative tests
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points2, 0); // g_pts can't be less than 1, invalid input
+            LICs.lic11holds(points2, 0); // g_pts can't be less than 1, invalid input
         });
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points1, 3); // g_pts can't be more than the number of point minus 2, invalid input
+            LICs.lic11holds(points1, 3); // g_pts can't be more than the number of point minus 2, invalid input
         });
     }
 
@@ -355,15 +353,15 @@ public class MainTest {
                 new Point2D.Double(0,10)};
 
         // Positive tests
-        assertTrue(Main.lic12holds(points1, 1, 5, 4));  // We make the parameters vary until we cannot find the two matching set of points
-        assertTrue(Main.lic12holds(points1, 2, 5, 4));  // that are respectively more than length1 away and less than length2
-        assertTrue(Main.lic12holds(points1, 3, 5, 4));
-        assertFalse(Main.lic12holds(points1, 4, 5, 4));
-        assertFalse(Main.lic12holds(points1, 5, 3, 10));    // Should be false if the number of points is smaller than kPoints + 2
+        assertTrue(LICs.lic12holds(points1, 1, 5, 4));  // We make the parameters vary until we cannot find the two matching set of points
+        assertTrue(LICs.lic12holds(points1, 2, 5, 4));  // that are respectively more than length1 away and less than length2
+        assertTrue(LICs.lic12holds(points1, 3, 5, 4));
+        assertFalse(LICs.lic12holds(points1, 4, 5, 4));
+        assertFalse(LICs.lic12holds(points1, 5, 3, 10));    // Should be false if the number of points is smaller than kPoints + 2
                                                                                   // It is the case here as we have 6 points , and 5 + 2 = 7
         // Negative test
         assertThrows(IllegalArgumentException.class, () -> { // length2 cannot be negative
-            Main.lic12holds(points1, 5, 3, -3);
+            LICs.lic12holds(points1, 5, 3, -3);
         });
     }
   
@@ -377,12 +375,12 @@ public class MainTest {
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
         // Positive Test, LIC8 returns true and there exists a set of 3 data points that can be contained by a circle of radius2
-        assertTrue(Main.lic13holds(points, 7, 2, 2,0.5, 1));
+        assertTrue(LICs.lic13holds(points, 7, 2, 2,0.5, 1));
         // Negative Test, LIC8 returns true but there does not exist a set of 3 data points that can be contained by a circle of radius2
-        assertFalse(Main.lic13holds(points, 7, 2, 2,0.5, 0.5));
+        assertFalse(LICs.lic13holds(points, 7, 2, 2,0.5, 0.5));
         // Params Check, radius2 < 0
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic13holds(points, 7, 2, 2, 0.5, -1);
+            LICs.lic13holds(points, 7, 2, 2, 0.5, -1);
         });
     }
 
@@ -419,11 +417,11 @@ public class MainTest {
         double area1 = 3.9;
         double area2 = 4.1;
 
-        assertTrue(Main.lic14holds(points1, area1, area2, e_pts, f_pts));
-        assertFalse(Main.lic14holds(points1, area1, area1, e_pts, f_pts));
+        assertTrue(LICs.lic14holds(points1, area1, area2, e_pts, f_pts));
+        assertFalse(LICs.lic14holds(points1, area1, area1, e_pts, f_pts));
         assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic14holds(points1, area1, area1 - area2, e_pts, f_pts);
+            LICs.lic14holds(points1, area1, area1 - area2, e_pts, f_pts);
         });
-        assertFalse(Main.lic14holds(points3, area1, area2, e_pts, f_pts));
+        assertFalse(LICs.lic14holds(points3, area1, area2, e_pts, f_pts));
     }
 }
