@@ -292,52 +292,6 @@ public class MainTest {
     }
 
     @Test
-    public void testLIC12() {
-        Point2D[] points1 = {new Point2D.Double(0,0),
-                new Point2D.Double(0,1),
-                new Point2D.Double(0,0),
-                new Point2D.Double(0,4),
-                new Point2D.Double(0,0),
-                new Point2D.Double(0,10)};
-
-        // Positive tests
-        assertTrue(Main.lic12holds(points1, 1, 5, 4));  // We make the parameters vary until we cannot find the two matching set of points
-        assertTrue(Main.lic12holds(points1, 2, 5, 4));  // that are respectively more than length1 away and less than length2
-        assertTrue(Main.lic12holds(points1, 3, 5, 4));
-        assertFalse(Main.lic12holds(points1, 4, 5, 4));
-        assertFalse(Main.lic12holds(points1, 5, 3, 10));    // Should be false if the number of points is smaller than kPoints + 2
-                                                                                  // It is the case here as we have 6 points , and 5 + 2 = 7
-        // Negative test
-        assertThrows(IllegalArgumentException.class, () -> { // length2 cannot be negative
-            Main.lic12holds(points1, 5, 3, -3);
-        });
-    }
-
-    @Test
-    public void testLIC11() {
-        Point2D[] points1 = {new Point2D.Double(0, 0),
-            new Point2D.Double(0, 1),
-            new Point2D.Double(1, 2),
-            new Point2D.Double(-1, 3)};
-
-        Point2D[] points2 = {new Point2D.Double(0, 0),
-            new Point2D.Double(0, 1),
-            new Point2D.Double(1, 2),
-            new Point2D.Double(2, 3)};
-        
-        // Positive tests
-        assertTrue(Main.lic11holds(points1, 1)); // Return true because (-1, 3) and (0, 1) satisfies the condition.
-        assertFalse(Main.lic11holds(points2, 1)); // Return false the x value of the points are increasing, does not satisfies the condition.
-        
-        // Negative tests
-        assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points2, 0); // g_pts can't be less than 1, invalid input
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            Main.lic11holds(points1, 3); // g_pts can't be more than the number of point minus 2, invalid input
-        });
-    }
-
     public void testLIC10() {
         /*
          * This test sets up 6 points and also sets the area1 of and the set steps between the points
@@ -365,6 +319,53 @@ public class MainTest {
 
         assertTrue(Main.lic10holds(p1, area1, e_pts, f_pts));
         assertFalse(Main.lic10holds(p1, area1 * 5, e_pts, f_pts));
+    }
+
+    @Test
+    public void testLIC11() {
+        Point2D[] points1 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(1, 2),
+            new Point2D.Double(-1, 3)};
+
+        Point2D[] points2 = {new Point2D.Double(0, 0),
+            new Point2D.Double(0, 1),
+            new Point2D.Double(1, 2),
+            new Point2D.Double(2, 3)};
+        
+        // Positive tests
+        assertTrue(Main.lic11holds(points1, 1)); // Return true because (-1, 3) and (0, 1) satisfies the condition.
+        assertFalse(Main.lic11holds(points2, 1)); // Return false the x value of the points are increasing, does not satisfies the condition.
+        
+        // Negative tests
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic11holds(points2, 0); // g_pts can't be less than 1, invalid input
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic11holds(points1, 3); // g_pts can't be more than the number of point minus 2, invalid input
+        });
+    }
+
+    @Test
+    public void testLIC12() {
+        Point2D[] points1 = {new Point2D.Double(0,0),
+                new Point2D.Double(0,1),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,4),
+                new Point2D.Double(0,0),
+                new Point2D.Double(0,10)};
+
+        // Positive tests
+        assertTrue(Main.lic12holds(points1, 1, 5, 4));  // We make the parameters vary until we cannot find the two matching set of points
+        assertTrue(Main.lic12holds(points1, 2, 5, 4));  // that are respectively more than length1 away and less than length2
+        assertTrue(Main.lic12holds(points1, 3, 5, 4));
+        assertFalse(Main.lic12holds(points1, 4, 5, 4));
+        assertFalse(Main.lic12holds(points1, 5, 3, 10));    // Should be false if the number of points is smaller than kPoints + 2
+                                                                                  // It is the case here as we have 6 points , and 5 + 2 = 7
+        // Negative test
+        assertThrows(IllegalArgumentException.class, () -> { // length2 cannot be negative
+            Main.lic12holds(points1, 5, 3, -3);
+        });
     }
   
     @Test
