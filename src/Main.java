@@ -36,11 +36,6 @@ public class Main {
 
             numPoints = Integer.parseInt(br.readLine());
 
-            if(numPoints < 3) {
-                br.close();
-                throw new IllegalArgumentException("At least three points are required.");
-            }
-
             points = new Point2D[numPoints];
             
             // Putting the points into array
