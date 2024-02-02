@@ -6,7 +6,6 @@ import org.junit.Rule;
 import org.junit.rules.Timeout;
 
 import java.awt.geom.Point2D;
-import java.util.*;
 
 // Test Class!
 public class MainTest {
