@@ -165,6 +165,30 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] testFiles = null;
+
+        System.out.println("How many testfiles would you like to test?");
+        try {
+            String numOfTestFiles = sc.nextLine();
+            testFiles = new String[Integer.parseInt(numOfTestFiles)];
+        }catch(Exception e) {
+            System.out.println("Invalid input");
+            System.exit(-1);
+        }
         
+        for (int i = 0; i < testFiles.length; i++) {
+            System.out.println("Insert the testfile's name on by one");
+            String fileName = sc.nextLine();
+            testFiles[i] = "testfiles/" + fileName + ".txt";
+        }
+
+        String result = "";
+
+        for (int i = 0; i < testFiles.length; i++) {
+            result = test(testFiles[i]);
+            System.out.println("Result of testfile " + testFiles[i] + " is: " + result);
+        }
+        sc.close();
     }
 }
