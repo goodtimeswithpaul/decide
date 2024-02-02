@@ -9,8 +9,9 @@ public class LICs {
             throw new IllegalArgumentException("At least 2 points are required, and length should be positive or zero.");
         }
 
+        double length1Squared = length1 * length1;
         for (int i = 0; i < points.length - 1; i++) {
-            if (points[i].distance(points[i+1]) > length1) {
+            if (points[i].distanceSq(points[i+1]) > length1Squared) {
                 return true;
             }
         }
@@ -18,10 +19,10 @@ public class LICs {
     }
 
     public static boolean lic1holds(Point2D[] points, double radius1) {
-
         if (radius1 < 0) {
             throw new IllegalArgumentException("Radius1 must be at least 0.");
         }
+
         Point2D p1, p2, p3;
         double[] angles = new double[3];
         for (int i = 0; i < points.length - 2; i++) {
@@ -34,6 +35,7 @@ public class LICs {
             angles[1] = Utilities.getAngle(p2, p1, p3);
             angles[2] = Utilities.getAngle(p3, p2, p1);
 
+            double radius1SquaredEquivalent = radius1 * radius1 * 4;
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > Utilities.pi) {
                     angles[j] = 2 * Utilities.pi - angles[j];
@@ -42,15 +44,15 @@ public class LICs {
                 if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
-                        if (p2.distance(p3) / 2 > radius1) {
+                        if (p2.distanceSq(p3) > radius1SquaredEquivalent) {
                             return true;
                         }
                     } else if (j == 1) { // Angle when p2 is vertex
-                        if (p1.distance(p3) / 2 > radius1) {
+                        if (p1.distanceSq(p3) > radius1SquaredEquivalent) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (p1.distance(p2) / 2 > radius1) {
+                        if (p1.distanceSq(p2) > radius1SquaredEquivalent) {
                             return true;
                         }
                     }
@@ -166,6 +168,7 @@ public class LICs {
         }
         Point2D pStart, pEnd;
 
+        double distSquared = dist * dist;
         for (int i = 0; i < points.length - (nPoints - 1); i++) {
             pStart = points[i];
             pEnd = points[i + (nPoints - 1)];
@@ -174,7 +177,7 @@ public class LICs {
             // other points
             if (pStart.equals(pEnd)) {
                 for (int j = i + 1; j < i + nPoints; j++) {
-                    if (points[j].distance(pStart) > dist) {
+                    if (points[j].distanceSq(pStart) > distSquared) {
                         return true;
                     }
                 }
@@ -205,8 +208,9 @@ public class LICs {
             throw new IllegalArgumentException("kPoints is invalid.");
         }
 
+        double length1Squared = length1 * length1;
         for (int i = 0; i < points.length - kPoints - 1; i++) {
-            if (points[i].distance(points[i + kPoints + 1]) > length1) {
+            if (points[i].distanceSq(points[i + kPoints + 1]) > length1Squared) {
                 return true;
             }
         }
@@ -243,6 +247,7 @@ public class LICs {
             angles[1] = Utilities.getAngle(p2, p1, p3);
             angles[2] = Utilities.getAngle(p3, p2, p1);
 
+            double radius1SquaredEquivalent = radius1 * radius1 * 4;
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > Utilities.pi) {
                     angles[j] = 2 * Utilities.pi - angles[j];
@@ -251,15 +256,15 @@ public class LICs {
                 if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
-                        if (p2.distance(p3) / 2 > radius1) {
+                        if (p2.distanceSq(p3) > radius1SquaredEquivalent) {
                             return true;
                         }
                     } else if (j == 1) { // Angle when p2 is vertex
-                        if (p1.distance(p3) / 2 > radius1) {
+                        if (p1.distanceSq(p3) > radius1SquaredEquivalent) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (p1.distance(p2) / 2 > radius1) {
+                        if (p1.distanceSq(p2) > radius1SquaredEquivalent) {
                             return true;
                         }
                     }
@@ -346,10 +351,11 @@ public class LICs {
             return false;
         }
 
+        double length1Squared = length1 * length1;
         for (int i = 0; i < points.length - kPoints - 1; i++) {
-            if (points[i].distance(points[i + kPoints + 1]) > length1) {
+            if (points[i].distanceSq(points[i + kPoints + 1]) > length1Squared) {
                 for (int j = 0; j < points.length - kPoints - 1; j++) {
-                    if (points[j].distance(points[j + kPoints + 1]) < length2) {
+                    if (points[j].distanceSq(points[j + kPoints + 1]) < length1Squared) {
                         return true;
                     }
                 }
@@ -379,6 +385,7 @@ public class LICs {
             angles[1] = Utilities.getAngle(p2, p1, p3);
             angles[2] = Utilities.getAngle(p3, p2, p1);
 
+            double radius2SquaredEquivalent = radius2 * radius2 * 4;
             for (int j = 0; j < 3; j++) {
                 if (angles[j] > Utilities.pi) {
                     angles[j] = 2 * Utilities.pi - angles[j];
@@ -387,15 +394,15 @@ public class LICs {
                 if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
-                        if (p2.distance(p3) / 2 <= radius2) {
+                        if (p2.distanceSq(p3) <= radius2SquaredEquivalent) {
                             return true;
                         }
                     } else if (j == 1) { // Angle when p2 is vertex
-                        if (p1.distance(p3) / 2 <= radius2) {
+                        if (p1.distanceSq(p3) <= radius2SquaredEquivalent) {
                             return true;
                         }
                     } else { // Angle when p3 is vertex
-                        if (p1.distance(p2) / 2 <= radius2) {
+                        if (p1.distanceSq(p2) <= radius2SquaredEquivalent) {
                             return true;
                         }
                     }
