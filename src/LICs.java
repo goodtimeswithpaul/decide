@@ -3,59 +3,6 @@ import java.util.stream.IntStream;
 
 public class LICs {
 
-    // Utilities
-    final static double pi = 3.1415626535;
-    private static double calculateTriangleArea(Point2D p1, Point2D p2, Point2D p3) {
-        return 0.5 * Math.abs((p1.getX() * (p2.getY() - p3.getY()) +
-                p2.getX() * (p3.getY() - p1.getY()) +
-                p3.getX() * (p1.getY() - p2.getY())));
-    }
-
-    private static double calculateDistanceToLine(Point2D p, Point2D start, Point2D end) {
-        double pToStart = p.distance(start);
-        double pToEnd = p.distance(end);
-        double startToEnd = start.distance(end);
-
-        // Find area using Heron's formula
-        double s = (pToStart + pToEnd + startToEnd) / 2;
-        double area = Math.sqrt(s * (s - pToStart) * (s - pToEnd) * (s - startToEnd));
-
-        return (2 * area) / startToEnd;
-    }
-
-    private static double getCircumradius(Point2D p1, Point2D p2, Point2D p3) {
-        double lengthA = p1.distance(p2);
-        double lengthB = p1.distance(p3);
-        double lengthC = p2.distance(p3);
-
-        // Find area using Heron's formula
-        double s = (lengthA + lengthB + lengthC) / 2;
-        double area = Math.sqrt(s * (s - lengthA) * (s - lengthB) * (s - lengthC));
-
-        return (lengthA * lengthB * lengthC) / (4 * area);
-    }
-
-    public static double getAngle(Point2D vertex, Point2D before, Point2D after){
-
-        //vector 1
-        double vec1X = before.getX() - vertex.getX();
-        double vec1Y = before.getY() - vertex.getY();
-        //vector 2
-        double vec2X = after.getX() - vertex.getX();
-        double vec2Y = after.getY() - vertex.getY();
-
-        //Dot product
-        double dotProduct = vec1X*vec2X + vec1Y*vec2Y;
-
-        //Magnitude of vectors
-        double mag1 = Math.sqrt(vec1X*vec1X + vec1Y*vec1Y);
-        double mag2 = Math.sqrt(vec2X*vec2X + vec2Y*vec2Y);
-
-        double angleInRadians = Math.acos(dotProduct / (mag1*mag2));
-
-        return angleInRadians;
-    }
-
     // LICs check
     public static boolean lic0holds(Point2D[] points, double length1) {
         if (!(0 <= length1 && points.length >= 2)) {
@@ -83,16 +30,16 @@ public class LICs {
             p2 = points[i + 1];
             p3 = points[i + 2];
 
-            angles[0] = getAngle(p1, p2, p3);
-            angles[1] = getAngle(p2, p1, p3);
-            angles[2] = getAngle(p3, p2, p1);
+            angles[0] = Utilities.getAngle(p1, p2, p3);
+            angles[1] = Utilities.getAngle(p2, p1, p3);
+            angles[2] = Utilities.getAngle(p3, p2, p1);
 
             for (int j = 0; j < 3; j++) {
-                if (angles[j] > pi) {
-                    angles[j] = 2 * pi - angles[j];
+                if (angles[j] > Utilities.pi) {
+                    angles[j] = 2 * Utilities.pi - angles[j];
                 }
 
-                if (angles[j] > pi / 2) {
+                if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
                         if (p2.distance(p3) / 2 > radius1) {
@@ -110,7 +57,7 @@ public class LICs {
                 }
             }
 
-            if (getCircumradius(p1, p2, p3) > radius1) {
+            if (Utilities.getCircumradius(p1, p2, p3) > radius1) {
                 return true;
             }
 
@@ -119,7 +66,7 @@ public class LICs {
     }
 
     public static boolean lic2holds(Point2D[] points, double epsilon) {
-        if (epsilon < 0 || epsilon >= pi) {
+        if (epsilon < 0 || epsilon >= Utilities.pi) {
             throw new IllegalArgumentException("At least three points are required, and 0 <= epsilon < pi");
         }
         if(points.length < 3){
@@ -127,8 +74,8 @@ public class LICs {
         }
         for (int i = 1; i <(points.length - 1); i++) {
             if (!(points[i].equals(points[i-1])) && !(points[i].equals(points[i+1]))) {
-                double angle = getAngle(points[i], points[i-1], points[i+1]);
-                if (angle > (pi + epsilon) || angle < (pi - epsilon)) {
+                double angle = Utilities.getAngle(points[i], points[i-1], points[i+1]);
+                if (angle > (Utilities.pi + epsilon) || angle < (Utilities.pi - epsilon)) {
                     return true;
                 }
             }
@@ -148,7 +95,7 @@ public class LICs {
             p2 = points[i + 1];
             p3 = points[i + 2];
 
-            if (calculateTriangleArea(p1, p2, p3) > area1) {
+            if (Utilities.calculateTriangleArea(p1, p2, p3) > area1) {
                 return true;
             }
         }
@@ -235,7 +182,7 @@ public class LICs {
                 // point
             } else {
                 for (int j = i + 1; j < i + nPoints; j++) {
-                    if (calculateDistanceToLine(points[j], pStart, pEnd) > dist) {
+                    if (Utilities.calculateDistanceToLine(points[j], pStart, pEnd) > dist) {
                         return true;
                     }
                 }
@@ -292,16 +239,16 @@ public class LICs {
             p2 = points[i + aPoints + 1];
             p3 = points[i + aPoints + bPoints + 2];
 
-            angles[0] = getAngle(p1, p2, p3);
-            angles[1] = getAngle(p2, p1, p3);
-            angles[2] = getAngle(p3, p2, p1);
+            angles[0] = Utilities.getAngle(p1, p2, p3);
+            angles[1] = Utilities.getAngle(p2, p1, p3);
+            angles[2] = Utilities.getAngle(p3, p2, p1);
 
             for (int j = 0; j < 3; j++) {
-                if (angles[j] > pi) {
-                    angles[j] = 2 * pi - angles[j];
+                if (angles[j] > Utilities.pi) {
+                    angles[j] = 2 * Utilities.pi - angles[j];
                 }
 
-                if (angles[j] > pi / 2) {
+                if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
                         if (p2.distance(p3) / 2 > radius1) {
@@ -319,7 +266,7 @@ public class LICs {
                 }
             }
 
-            if (getCircumradius(p1, p2, p3) > radius1) {
+            if (Utilities.getCircumradius(p1, p2, p3) > radius1) {
                 return true;
             }
 
@@ -339,8 +286,8 @@ public class LICs {
         int totalset = cPoints + dPoints + 2;
         for (int i = 0; i < points.length - totalset; i++) {
             if (!(points[i + cPoints + 1].equals(points[i]) && points[i + cPoints + dPoints + 2].equals(points[i]))) {
-                double angleR = Math.abs(getAngle(points[i + cPoints + 1], points[i], points[i + cPoints + dPoints + 2]));
-                if(angleR <(pi - epsilon) || angleR > (pi + epsilon)){
+                double angleR = Math.abs(Utilities.getAngle(points[i + cPoints + 1], points[i], points[i + cPoints + dPoints + 2]));
+                if(angleR <(Utilities.pi - epsilon) || angleR > (Utilities.pi + epsilon)){
                     return true;
                 }
             }
@@ -363,7 +310,7 @@ public class LICs {
             p2 = points[i + ePoints + 1];
             p3 = points[i + ePoints + fPoints + 2];
 
-            if (calculateTriangleArea(p1, p2, p3) > area1) {
+            if (Utilities.calculateTriangleArea(p1, p2, p3) > area1) {
                 return true;
             }
         }
@@ -428,16 +375,16 @@ public class LICs {
             p2 = points[i + aPoints + 1];
             p3 = points[i + aPoints + bPoints + 2];
 
-            angles[0] = getAngle(p1, p2, p3);
-            angles[1] = getAngle(p2, p1, p3);
-            angles[2] = getAngle(p3, p2, p1);
+            angles[0] = Utilities.getAngle(p1, p2, p3);
+            angles[1] = Utilities.getAngle(p2, p1, p3);
+            angles[2] = Utilities.getAngle(p3, p2, p1);
 
             for (int j = 0; j < 3; j++) {
-                if (angles[j] > pi) {
-                    angles[j] = 2 * pi - angles[j];
+                if (angles[j] > Utilities.pi) {
+                    angles[j] = 2 * Utilities.pi - angles[j];
                 }
 
-                if (angles[j] > pi / 2) {
+                if (angles[j] > Utilities.pi / 2) {
 
                     if (j == 0) { // Angle when p1 is vertex
                         if (p2.distance(p3) / 2 <= radius2) {
@@ -455,7 +402,7 @@ public class LICs {
                 }
             }
 
-            if (getCircumradius(p1, p2, p3) <= radius2) {
+            if (Utilities.getCircumradius(p1, p2, p3) <= radius2) {
                 return true;
             }
 
@@ -488,13 +435,13 @@ public class LICs {
             p2 = points[i + ePts];
             p3 = points[i + ePts + fPts];
 
-            if (calculateTriangleArea(p1, p2, p3) > area1) {
+            if (Utilities.calculateTriangleArea(p1, p2, p3) > area1) {
                 for (int j = 0; j < points.length - ePts - fPts; j++) {
                     p4 = points[j];
                     p5 = points[j + ePts];
                     p6 = points[j + ePts + fPts];
 
-                    if (calculateTriangleArea(p4, p5, p6) < area2) {
+                    if (Utilities.calculateTriangleArea(p4, p5, p6) < area2) {
                         return true;
                     }
                 }
