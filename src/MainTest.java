@@ -62,11 +62,15 @@ public class MainTest {
   
     @Test
     public void testLIC1(){
-        Point2D[] testPoints = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
         // Positive test, the points are not contained by the circle of the given radius
-        assertTrue(Main.lic1holds(testPoints,0.5));
+        Point2D[] points = {new Point2D.Double(0,1), new Point2D.Double(1,0), new Point2D.Double(1,1)};
+        assertTrue(Main.lic1holds(points,0.5));
         // Negative test, the points are contained by the circle of the given radius
-        assertFalse(Main.lic1holds(testPoints,1));
+        assertFalse(Main.lic1holds(points,1));
+        // Params check, radius1 < 0
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic2holds(points, -1);
+        });
     }
 
     @Test
@@ -226,7 +230,35 @@ public class MainTest {
             Main.lic7holds(null, 1000, 1000);
         });
     }
-    
+
+    @Test
+    public void testLIC8() {
+        Point2D[] points = {new Point2D.Double(0,1),
+            new Point2D.Double(5,5),
+            new Point2D.Double(6,1),
+            new Point2D.Double(1,0),
+            new Point2D.Double(3,4),
+            new Point2D.Double(8,1),
+            new Point2D.Double(1,1)};
+        // Positive Test, there exists a set of 3 data points that cannot be contained by a circle of radius1
+        assertTrue(Main.lic8holds(points, 7, 2, 2,0.5));
+        // Negative Test, there does not exists a set of 3 data points that cannot be contained by a circle of radius1
+        assertFalse(Main.lic8holds(points, 7, 2, 2,1));
+        // Params Check, aPoints smaller than 1, throws exception
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 7, 0, 2, 0.5);
+        });
+        // Params Check, bPoints smaller than 1, throws exception
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 7, 2, 0, 0.5);
+        });
+        // Params Check, aPoints + bPoints > numPoints - 3, throws exception
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic8holds(points, 5, 2, 2, 0.5);
+        });
+    }
+
+
     @Test
     public void testLIC9() {
         Point2D[] points1 = {new Point2D.Double(0, 0),
@@ -306,24 +338,6 @@ public class MainTest {
         });
     }
 
-    @Test
-    public void testLIC8() {
-        Point2D[] testPoints = {new Point2D.Double(0,1),
-            new Point2D.Double(5,5),
-            new Point2D.Double(6,1),
-            new Point2D.Double(1,0),
-            new Point2D.Double(3,4),
-            new Point2D.Double(8,1),
-            new Point2D.Double(1,1)};
-        // Positive Test, there exists a set of 3 data points that cannot be contained by a circle of radius1
-        assertTrue(Main.lic8holds(testPoints, 7, 2, 2,0.5));
-        // Negative Test, there does not exists a set of 3 data points that cannot be contained by a circle of radius1
-        assertFalse(Main.lic8holds(testPoints, 7, 2, 2,1));
-        // Negative Test
-        assertFalse(Main.lic8holds(testPoints, 7, 5, 3, 0.5));
-    }
-
-    @Test
     public void testLIC10() {
         /*
          * This test sets up 6 points and also sets the area1 of and the set steps between the points
@@ -355,7 +369,7 @@ public class MainTest {
   
     @Test
     public void testLIC13() {
-        Point2D[] testPoints = {new Point2D.Double(0,1),
+        Point2D[] points = {new Point2D.Double(0,1),
             new Point2D.Double(5,5),
             new Point2D.Double(6,1),
             new Point2D.Double(1,0),
@@ -363,9 +377,13 @@ public class MainTest {
             new Point2D.Double(8,1),
             new Point2D.Double(1,1)};
         // Positive Test, LIC8 returns true and there exists a set of 3 data points that can be contained by a circle of radius2
-        assertTrue(Main.lic13holds(testPoints, 7, 2, 2,0.5, 1));
+        assertTrue(Main.lic13holds(points, 7, 2, 2,0.5, 1));
         // Negative Test, LIC8 returns true but there does not exist a set of 3 data points that can be contained by a circle of radius2
-        assertFalse(Main.lic13holds(testPoints, 7, 2, 2,0.5, 0.5));
+        assertFalse(Main.lic13holds(points, 7, 2, 2,0.5, 0.5));
+        // Params Check, radius2 < 0
+        assertThrows(IllegalArgumentException.class, () -> {
+            Main.lic13holds(points, 7, 2, 2, 0.5, -1);
+        });
     }
 
     @Test
